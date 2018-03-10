@@ -1,0 +1,19 @@
+### Virtual environment ###
+venv/
+
+### macOS cruft ###
+*.DS_Store
+
+### Python cruft ###
+*.pyc
+__pycache__/
+
+### Static directory ###
+/static/
+
+### Databse file ###
+db.sqlite3
+
+### Sensitive information ###
+*createsuperuser.config
+*.env

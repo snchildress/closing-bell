@@ -1,0 +1,6 @@
+Django==2.0.3
+django-sql-explorer==1.1.1
+pytz==2018.3
+six==1.11.0
+sqlparse==0.2.4
+unicodecsv==0.14.1
