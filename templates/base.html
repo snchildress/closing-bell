@@ -10,10 +10,16 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
-        <!-- Overwrite default Google Material Design Components color schemes -->
+        <!-- Global CSS -->
         <style>
+            /* Overwrite default Google Material Design Components color schemes */
             :root {
                 --mdc-theme-primary: #158CAF;
+            }
+
+            /* Menu icon size */
+            .mdc-toolbar__menu-icon {
+                font-size: 22px;
             }
         </style>
 
@@ -27,7 +33,7 @@
             <div class="mdc-toolbar__row">
                 <!-- Home button -->
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                    <i class="fas fa-home mdc-toolbar__menu-icon" style="font-size: 24px;"></i>
+                    <i class="fas fa-home mdc-toolbar__menu-icon"></i>
                 </section>
 
                 <!-- Centered title -->
@@ -37,7 +43,7 @@
 
                 <!-- Toolbar navigation -->
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-                    <!-- Placeholder -->
+                    <i class="fas fa-user mdc-toolbar__menu-icon"></i>
                 </section>
             </div>
         </header>
