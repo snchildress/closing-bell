@@ -2,12 +2,23 @@
 <html>
 
     <head>
+        <!-- Project title -->
         <title>Closing Bell</title>
+
+        <!-- Google Material Design Components CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.31.0/dist/material-components-web.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     </head>
 
     <body>
         {% block body %}
         {% endblock %}
+
+        <!-- Google Material Design Components JavaScript -->
+        <script src="https://unpkg.com/material-components-web@0.31.0/dist/material-components-web.min.js"></script>
+        <script>window.mdc.autoInit();</script>
     </body>
 
 </html>
