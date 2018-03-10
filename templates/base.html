@@ -21,6 +21,16 @@
             .mdc-toolbar__menu-icon {
                 font-size: 22px;
             }
+
+            /* Remove box shadow on icon click */
+            #menu-button:active,
+            #menu-button:focus,
+            #menu-button.active {
+                background-image: none;
+                outline: 0;
+                -webkit-box-shadow: none;
+                        box-shadow: none;
+            }
         </style>
 
         <!-- Font Awesome JS -->
