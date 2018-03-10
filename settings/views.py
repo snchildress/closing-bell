@@ -1,8 +1,9 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
-def display_user_settings(request, id):
-    return HttpResponse('Placeholder')
+def user_settings(request, id):
+    return render(request, 'settings/user_settings.html')
 
-def display_all_users_settings(request):
-    return HttpResponse('Placeholder')
+def all_users_settings(request):
+    return render(request, 'settings/all_users_settings.html')
