@@ -9,10 +9,29 @@
         <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.31.0/dist/material-components-web.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+        <!-- Overwrite default Google Material Design Components color schemes -->
+        <style>
+            :root {
+                --mdc-theme-primary: #158CAF;
+            }
+        </style>
+
+        <!-- Font Awesome JS -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     </head>
 
     <body>
+        <!-- Navigation toolbar -->
+        <header class="mdc-toolbar mdc-toolbar--fixed">
+            <div class="mdc-toolbar__row">
+                <section class="mdc-toolbar__section">
+                    <span class="mdc-toolbar__title"><i class="far fa-bell"></i>&nbsp;&nbsp;Closing Bell</span>
+                </section>
+            </div>
+        </header>
+
+        <!-- Body content -->
         {% block body %}
         {% endblock %}
 
