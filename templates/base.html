@@ -42,8 +42,20 @@
                 </section>
 
                 <!-- Toolbar navigation -->
-                <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-                    <i class="fas fa-user mdc-toolbar__menu-icon"></i>
+                <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-menu-anchor">
+                    <button class="mdc-toolbar__menu-icon" id="menu-button">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div style="margin: 60px 20px 0 0;" class="mdc-menu" tabindex="-1" data-mdc-auto-init="MDCMenu" dir="rtl">
+                        <ul class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
+                            <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                Settings
+                            </li>
+                            <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                Logout
+                            </li>
+                        </ul>
+                    </div>
                 </section>
             </div>
         </header>
@@ -55,6 +67,18 @@
         <!-- Google Material Design Components JavaScript -->
         <script src="https://unpkg.com/material-components-web@0.31.0/dist/material-components-web.min.js"></script>
         <script>window.mdc.autoInit();</script>
+
+        <!-- Script for toggling the user menu open and closed -->
+        <script>
+            // Get the menu button and menu elements
+            var menuButton = document.getElementById('menu-button');
+            var menu = document.querySelector('.mdc-menu');
+
+            // Toggle the open state of the menu on menu button click
+            menuButton.addEventListener('click', function() {
+                menu.MDCMenu.open = !menu.MDCMenu.open;
+            });
+        </script>
     </body>
 
 </html>
