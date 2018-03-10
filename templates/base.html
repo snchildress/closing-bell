@@ -88,6 +88,11 @@
             menuButton.addEventListener('click', function() {
                 menu.MDCMenu.open = !menu.MDCMenu.open;
             });
+
+            // Close the menu if a user clicks outside the opened menu or hits Esc
+            document.addEventListener('MDCMenu:cancel', function() {
+                menu.MDCMenu.open = false;
+            });
         </script>
     </body>
 
