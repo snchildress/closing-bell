@@ -8,5 +8,5 @@ user_patterns = [
 
 urlpatterns = [
     path('user/', include(user_patterns)),
-    path('users/all', views.all_users_settings),
+    path('users/all', views.all_users_settings, name='all_users_settings'),
 ]

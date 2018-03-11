@@ -29,6 +29,12 @@
                 <!-- Home button -->
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
                     <i class="fas fa-home mdc-toolbar__menu-icon"></i>
+                    {% if user.is_staff %}
+                        <a href="{% url 'all_users_settings' %}"
+                           style="color: inherit;">
+                            <i class="fas fa-users mdc-toolbar__menu-icon"></i>
+                        </a>
+                    {% endif %}
                 </section>
 
                 <!-- Centered title -->
