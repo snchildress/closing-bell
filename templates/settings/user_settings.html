@@ -169,7 +169,7 @@
                     style="float: right;
                            width: 110px;
                            margin-right: 20px;"
-                    data-mdc-auto-init="MDCRipple">
+                    id="reset-button" data-mdc-auto-init="MDCRipple">
                 <i class="material-icons mdc-button__icon">refresh</i>
                     Reset
             </button>
@@ -186,6 +186,15 @@
     // Submit form on submit button click
     submitButton.addEventListener('click', function() {
         form.submit();
+    });
+
+
+    // Get reset button
+    var resetButton = document.getElementById('reset-button');
+
+    // Refresh page on reset button click
+    resetButton.addEventListener('click', function() {
+        location.reload();
     });
 </script>
 {% endblock %}
