@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 from settings.models import Profile
@@ -24,7 +24,12 @@ def user_settings(request, uuid):
         context['username'] = user.username
     return render(request, 'settings/user_settings.html', context)
 
+# TODO Make authentication required
 def create_new_user(request):
+    # Must be a staff user to create a new user
+    if not request.user.is_staff:
+        return redirect('user_settings', request.user.profile.uuid)
+
     context = {'new_user': True}
 
     if request.method == 'GET':
