@@ -31,20 +31,13 @@ def create_user_profile(sender, instance, created, **kwargs):
     """
     Create a Profile record when creating new User records
     """
-    if created:
-        try:
-            Profile.objects.create(user=instance)
-        except Exception as e:
-            print(e)
-            pass
+    if created and not instance.is_superuser:
+        Profile.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     """
     Save the corresponding Profile record when saving a User record
     """
-    try:
+    if not instance.is_superuser:
         instance.profile.save()
-    except Exception as e:
-        print(e)
-        pass
