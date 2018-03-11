@@ -20,7 +20,7 @@
 
             // Toggle the visibility of hidden divs
             if (toggleIcon.innerHTML == 'expand_more') {
-                cardTitle.innerHTML = 'Edit User';
+                cardTitle.innerHTML = 'Edit {{ user.first_name }}\'s Settings';
                 toggleIcon.innerHTML = 'expand_less';
                 profileDiv.style.display = 'block';
                 vacationPolicyDiv.style.display = 'block';
