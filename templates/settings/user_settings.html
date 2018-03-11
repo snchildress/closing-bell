@@ -185,7 +185,7 @@
 
     // Submit form on submit button click
     submitButton.addEventListener('click', function() {
-        form.submit();
+        validateSubmission(form);
     });
 
 
@@ -196,5 +196,20 @@
     resetButton.addEventListener('click', function() {
         location.reload();
     });
+
+
+    // Validate that all required form fields have values, then submit
+    function validateSubmission(form) {
+        var firstName = document.getElementById('first-name').value;
+        var lastName = document.getElementById('last-name').value;
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('current-password').value;
+
+        if (!firstName || !lastName || !username || !password) {
+            // TODO: Display error messaging to the user
+        } else {
+            form.submit();
+        }
+    };
 </script>
 {% endblock %}
