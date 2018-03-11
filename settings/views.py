@@ -2,8 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
+from settings.models import Profile
 
-def user_settings(request, id):
+
+def user_settings(request, uuid):
+    profile = Profile.objects.get(uuid=uuid)
     return render(request, 'settings/user_settings.html')
 
 def create_new_user(request):

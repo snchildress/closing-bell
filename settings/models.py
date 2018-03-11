@@ -20,7 +20,8 @@ class Profile(models.Model):
                                             auto_now=True)
 
     def __str__(self):
-        return str(self.user) + ' User Profile'
+        return self.user.first_name + ' ' + \
+            self.user.last_name + '\'s User Profile'
 
     class Meta:
         db_table = 'user_profiles'
