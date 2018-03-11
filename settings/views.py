@@ -93,5 +93,13 @@ def create_new_user(request):
 
         return render(request, 'settings/user_settings.html', context)
 
+# TODO Make authentication required
 def all_users_settings(request):
-    return render(request, 'settings/all_users_settings.html')
+    # Must be a staff user to view all users' settings
+    if not request.user.is_staff:
+        return redirect('user_settings', request.user.profile.uuid)
+
+    # Query all User and Profile records
+    users = User.objects.all().select_related('profile')
+    context = {'users': users}
+    return render(request, 'settings/all_users_settings.html', context)

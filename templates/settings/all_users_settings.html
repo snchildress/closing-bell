@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-{% include './partials/user_settings_partial.html' %}
+    {% for user in users %}
+        {% include './partials/user_settings_partial.html' %}
+    {% endfor %}
 {% endblock %}
