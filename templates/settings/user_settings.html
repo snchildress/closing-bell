@@ -15,7 +15,8 @@
         {% endif %}
     </h2>
 
-    <form>
+    <form method="POST" id="form" action="">
+    {% csrf_token %}
         <div style="width: 80%; margin: auto;">
             <div style="float: left;">
                 PROFILE
@@ -27,14 +28,14 @@
         <div style="width: 80%; margin: auto;">
             <!-- First name input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="first-name" type="text" />
+                <input class="mdc-text-field__input" id="first-name" name="first-name" type="text" />
                 <label class="mdc-text-field__label" for="first-name">First Name</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
             <!-- Last name input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="last-name" type="text" />
+                <input class="mdc-text-field__input" id="last-name" name="last-name" type="text" />
                 <label class="mdc-text-field__label" for="last-name">Last Name</label>
                 <div class="mdc-line-ripple"></div>
             </div>
@@ -82,14 +83,14 @@
         <div style="width: 80%; margin: auto;">
             <!-- Username field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="username" type="email" />
+                <input class="mdc-text-field__input" id="username" name="username" type="email" />
                 <label class="mdc-text-field__label" for="username">Username / Email Address</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
             <!-- Current password field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="current-password" type="password" />
+                <input class="mdc-text-field__input" id="current-password" name="password" type="password" />
                 <label class="mdc-text-field__label" for="current-password">
                     {% if new_user %}
                         Password
@@ -114,15 +115,15 @@
             <div style="width: 80%; margin: auto;">
                 <!-- Username field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-                    <input class="mdc-text-field__input" id="annual-accrued-days" type="number" />
-                    <label class="mdc-text-field__label" for="annual-accrued-days">Annual Accrued Days</label>
+                    <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" />
+                    <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
                     <div class="mdc-line-ripple"></div>
                 </div>
 
                 <!-- Current password field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                    <input class="mdc-text-field__input" id="max-allowed-accrual-days" type="number" />
-                    <label class="mdc-text-field__label" for="max-allowed-accrual-days">Maximum Allowable Accrued Days</label>
+                    <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" />
+                    <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
                     <div class="mdc-line-ripple"></div>
                 </div>
             </div>
@@ -154,7 +155,7 @@
                         margin-top: 190px;">
                     {% endif %}
             <!-- Update settings button -->
-            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" data-mdc-auto-init="MDCRipple">
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
                 <i class="material-icons mdc-button__icon">check</i>
                 {% if new_user %}
                     Create
@@ -176,4 +177,15 @@
     </form>
 
 </div>
+
+<script>
+    // Get submit button and form elements
+    var submitButton = document.getElementById('submit-button');
+    var form = document.getElementById('form');
+
+    // Submit form on submit button click
+    submitButton.addEventListener('click', function() {
+        form.submit();
+    });
+</script>
 {% endblock %}
