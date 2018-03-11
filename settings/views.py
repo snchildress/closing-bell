@@ -5,9 +5,23 @@ from django.contrib.auth.models import User
 from settings.models import Profile
 
 
+# TODO Make authentication required
 def user_settings(request, uuid):
-    profile = Profile.objects.get(uuid=uuid)
-    return render(request, 'settings/user_settings.html')
+    context = {}
+    # If the user is requesting his/her own user settings page
+    if request.user.profile.uuid == uuid:
+        context['first_name'] = request.user.first_name
+        context['last_name'] = request.user.last_name
+        context['username'] = request.user.username
+    # Must be a staff user to access someone else's settings page\
+    elif request.user.is_staff:
+        # Query all User and Profile fields for the given Profile UUID
+        user = User.objects.filter(profile__uuid=uuid) \
+            .select_related('profile')[0]
+        context['first_name'] = user.first_name
+        context['last_name'] = user.last_name
+        context['username'] = user.username
+    return render(request, 'settings/user_settings.html', context)
 
 def create_new_user(request):
     context = {'new_user': True}
