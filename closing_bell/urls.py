@@ -8,7 +8,7 @@ import importlib
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('logout', views.logout_auth),
+    path('logout', views.logout_auth, name='logout'),
 ]
 
 for app in settings.CUSTOM_APPS:
