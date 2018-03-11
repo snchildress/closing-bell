@@ -101,8 +101,33 @@
             </div>
         </div>
 
-        <!-- New password div divided into two columns -->
-        {% if not new_user %}
+        {% if new_user %}
+            <!-- Vacation policy settings section -->
+            <div style="width: 80%; margin: auto; margin-top: 125px;">
+                <div style="float: left;">
+                    VACATION POLICY
+                </div>
+            </div>
+            <br />
+
+            <!-- Username and current password fields -->
+            <div style="width: 80%; margin: auto;">
+                <!-- Username field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="annual-accrued-days" type="number" />
+                    <label class="mdc-text-field__label" for="annual-accrued-days">Annual Accrued Days</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- Current password field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="max-allowed-accrual-days" type="number" />
+                    <label class="mdc-text-field__label" for="max-allowed-accrual-days">Maximum Allowable Accrued Days</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+        {% else %}
+            <!-- New password div divided into two columns -->
             <div style="width: 80%; margin: auto;">
                 <!-- New password field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
