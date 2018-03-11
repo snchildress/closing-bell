@@ -85,7 +85,6 @@ def create_new_user(request):
             user.profile.annual_accrual_days = annual_accrual_days
             user.profile.max_allowable_accrual_days = \
                 max_allowable_accrual_days
-            user.profile.remaining_accrual_days = 0
             user.save()
 
         except Exception as e:
