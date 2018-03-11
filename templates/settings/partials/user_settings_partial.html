@@ -16,9 +16,7 @@
         <span style="float: right;">
             <i class="material-icons"
                id="toggle-icon"
-               style="cursor: pointer;">
-                expand_more
-            </i>
+               style="cursor: pointer;">expand_more</i>
         </span>
         <h5 class="mdc-typography--display1 mdc-typography--adjust-margin"
             id="card-title-minimized"
@@ -51,15 +49,21 @@
             <div>
                 <!-- First name input field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-                    <input class="mdc-text-field__input" id="first-name" name="first-name" type="text" value="{{ user.first_name }}" />
-                    <label class="mdc-text-field__label" for="first-name">First Name</label>
+                    <input class="mdc-text-field__input" id="first-name"
+                           name="first-name" type="text" value="{{ user.first_name }}" />
+                    <label class="mdc-text-field__label" for="first-name">
+                        First Name
+                    </label>
                     <div class="mdc-line-ripple"></div>
                 </div>
 
                 <!-- Last name input field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                    <input class="mdc-text-field__input" id="last-name" name="last-name" type="text" value="{{ user.last_name }}" />
-                    <label class="mdc-text-field__label" for="last-name">Last Name</label>
+                    <input class="mdc-text-field__input" id="last-name"
+                           name="last-name" type="text" value="{{ user.last_name }}" />
+                    <label class="mdc-text-field__label" for="last-name">
+                        Last Name
+                    </label>
                     <div class="mdc-line-ripple"></div>
                 </div>
             </div>
@@ -85,15 +89,23 @@
         <div style="width: 80%; margin: auto;">
             <!-- Username field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" value="{{ user.profile.annual_accrual_days }}" />
-                <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
+                <input class="mdc-text-field__input" id="annual-accrual-days"
+                       name="annual-accrual-days" type="number"
+                       value="{{ user.profile.annual_accrual_days }}" readonly />
+                <label class="mdc-text-field__label" for="annual-accrual-days">
+                    Annual Accrual Days
+                </label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
             <!-- Current password field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" value="{{ user.profile.max_allowable_accrual_days }}" />
-                <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
+                <input class="mdc-text-field__input" id="max-allowable-accrual-days"
+                       name="max-allowable-accrual-days" type="number"
+                       value="{{ user.profile.max_allowable_accrual_days }}" readonly />
+                <label class="mdc-text-field__label" for="max-allowable-accrual-days">
+                    Maximum Allowable Accrual Days
+                </label>
                 <div class="mdc-line-ripple"></div>
             </div>
         </div>
@@ -105,7 +117,8 @@
                     margin-top: 125px;
                     display: none;">
             <!-- Update settings button -->
-            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
+            <button class="mdc-button mdc-button--raised" type="button"
+                    style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
                 <i class="material-icons mdc-button__icon">check</i>
                     Update
             </button>
