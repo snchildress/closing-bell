@@ -126,3 +126,19 @@ def all_users_settings(request):
     users = User.objects.all().select_related('profile')
     context = {'users': users}
     return render(request, 'settings/all_users_settings.html', context)
+
+# TODO Make authentication required
+def delete_user(request, uuid):
+    # Must be a staff user to delete users
+    if not request.user.is_staff:
+        return redirect('user_settings', request.user.profile.uuid)
+
+    try:
+        user = User.objects.get(profile__uuid=uuid)
+        user.delete()
+
+    except Exception as e:
+        print(e)
+        pass
+
+    return redirect('all_users_settings')
