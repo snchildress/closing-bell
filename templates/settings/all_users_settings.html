@@ -1,4 +1,90 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<div style="padding-top: 1px; text-align: center;">
+    <h2 class="mdc-typography--display3">All Users' Settings</h2>
+</div>
+
+<div class="mdc-card" style="padding-top: 1px;
+                             padding-bottom: 50px;
+                             text-align: center;
+                             max-width: 750px;
+                             margin: auto;">
+
+    <form>
+        <!-- Name div divided into two columns -->
+        <div style="width: 80%; margin: auto;">
+            <!-- First name input field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="first-name" type="text" />
+                <label class="mdc-text-field__label" for="first-name">First Name</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <!-- Last name input field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="last-name" type="text" />
+                <label class="mdc-text-field__label" for="last-name">Last Name</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <!-- Email address input field -->
+        <div style="width: 80%; margin: auto;">
+            <div class="mdc-text-field" style="width: 100%;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="email-address" type="email" />
+                <label class="mdc-text-field__label" for="email-address">Email Address</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <!-- Timezone dropdown menu -->
+        <div style="width: 80%; margin: auto; margin-top: 18px;">
+            <div class="mdc-select" role="listbox" style="width: 100%;" data-mdc-auto-init="MDCSelect">
+                <div class="mdc-select__surface" tabindex="0">
+                    <div class="mdc-select__label">Timezone</div>
+                    <div class="mdc-select__selected-text"></div>
+                    <div class="mdc-select__bottom-line"></div>
+                </div>
+
+                <div class="mdc-menu mdc-select__menu">
+                    <ul class="mdc-list mdc-menu__items">
+                        <li class="mdc-list-item" role="option" tabindex="0">
+                            US/Pacific
+                        </li>
+                        <li class="mdc-list-item" role="option" tabindex="0">
+                            US/Mountain
+                        </li>
+                        <li class="mdc-list-item" role="option" tabindex="0">
+                            US/Central
+                        </li>
+                        <li class="mdc-list-item" role="option" tabindex="0">
+                            US/Eastern
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form action buttons -->
+        <div style="width: 80%;
+                    margin: auto;
+                    margin-top: 50px;">
+            <!-- Update settings button -->
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>Update
+            </button>
+
+            <!-- Reset settings values button -->
+            <button class="mdc-button mdc-button--stroked" type="button"
+                    style="float: right;
+                           width: 110px;
+                           margin-right: 20px;"
+                    data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">refresh</i>Reset
+            </button>
+        </div>
+    </form>
+
+</div>
 {% endblock %}
