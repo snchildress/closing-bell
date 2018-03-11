@@ -1,5 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth import (
+    authenticate,
+    update_session_auth_hash,
+    login
+)
 from django.contrib.auth.models import User
 
 from settings.models import Profile
@@ -8,6 +13,32 @@ from settings.models import Profile
 # External views
 # TODO Make authentication required
 def user_settings(request, uuid):
+    if request.method == 'POST':
+        try:
+            # Get form field submissions
+            data = request.POST
+            first_name = data['first-name']
+            last_name = data['last-name']
+            username = data['username']
+            password = data['new-password']
+
+            user = authenticate(request, username=username,
+                                password=password)
+            if user is not None:
+                # Update the user's session and authenticate again
+                user.set_password(password)
+                update_session_auth_hash(request, user)
+                login(request, user)
+                # Use the new user settings to update the database record
+                user.first_name = first_name
+                user.last_name = last_name
+                user.username = username
+                user.save()
+
+        except Exception as e:
+            print(e)
+            pass
+
     context = {}
     # If the user is requesting his/her own user settings page
     if request.user.profile.uuid == uuid:
@@ -22,6 +53,7 @@ def user_settings(request, uuid):
         context['first_name'] = user.first_name
         context['last_name'] = user.last_name
         context['username'] = user.username
+
     return render(request, 'settings/user_settings.html', context)
 
 # TODO Make authentication required
@@ -46,12 +78,13 @@ def create_new_user(request):
             annual_accrual_days = data['annual-accrual-days']
             max_allowable_accrual_days = data['max-allowable-accrual-days']
 
-            # Create user object
+            # Create User and Profile records
             user = User.objects.create_user(username, username, password)
             user.first_name = first_name
             user.last_name = last_name
             user.profile.annual_accrual_days = annual_accrual_days
-            user.profile.max_allowable_accrual_days = max_allowable_accrual_days
+            user.profile.max_allowable_accrual_days = \
+                max_allowable_accrual_days
             user.profile.remaining_accrual_days = 0
             user.save()
 
