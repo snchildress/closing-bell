@@ -1,0 +1,177 @@
+<!-- Expandable card in minimized form -->
+<div class="mdc-card mdc-toolbar-fixed-adjust"
+     style="padding-top: 1px;
+            padding-bottom: 50px;
+            text-align: center;
+            max-width: 750px;
+            margin: auto;
+            margin-top: 100px;
+            margin-bottom: 50px;">
+
+    <!-- Name and expansion button div -->
+    <div onclick="toggleCardExpansion(this)"
+         style="width: 80%;
+                margin: auto;
+                height: 15px;
+                padding-top: 50px;">
+        <span style="float: right;">
+            <i class="material-icons"
+               id="toggle-icon"
+               style="cursor: pointer;">
+                expand_more
+            </i>
+        </span>
+        <h5 class="mdc-typography--display1 mdc-typography--adjust-margin"
+            id="card-title"
+            style="float: left;">
+            Full Name
+        </h5>
+    </div>
+
+    <!-- Edit user form -->
+    <form method="POST" id="form" action="">
+    {% csrf_token %}
+        <!-- Profile section -->
+        <div id="profile-div"
+             style="width: 80%;
+                    margin: auto;
+                    margin-top: 50px;
+                    display: none;">
+            <div style="float: left;">
+                PROFILE
+            </div>
+            <br />
+
+            <!-- Name div divided into two columns -->
+            <div>
+                <!-- First name input field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="first-name" name="first-name" type="text" value="{{ first_name }}" />
+                    <label class="mdc-text-field__label" for="first-name">First Name</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- Last name input field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="last-name" name="last-name" type="text" value="{{ last_name }}" />
+                    <label class="mdc-text-field__label" for="last-name">Last Name</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+        </div>
+
+        <!-- Vacation policy settings section -->
+        <div id="vacation-policy-div"
+             style="width: 80%;
+                    margin: auto;
+                    margin-top: 75px;
+                    display: none;">
+            <div style="float: left;">
+                VACATION POLICY
+            </div>
+        </div>
+        <br />
+
+        <!-- Username and current password fields -->
+        <div style="width: 80%; margin: auto;">
+            <!-- Username field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" />
+                <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <!-- Current password field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" />
+                <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <!-- Form action buttons -->
+        <div id="update-button-div"
+             style="width: 80%;
+                    margin: auto;
+                    margin-top: 125px;
+                    display: none;">
+            <!-- Update settings button -->
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>
+                    Update
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Get submit button and form elements
+    var submitButton = document.getElementById('submit-button');
+    var form = document.getElementById('form');
+
+    // Submit form on submit button click
+    submitButton.addEventListener('click', function() {
+        validateSubmission(form);
+    });
+
+
+    // Get reset button
+    var resetButton = document.getElementById('reset-button');
+
+    // Refresh page on reset button click
+    resetButton.addEventListener('click', function() {
+        location.reload();
+    });
+
+
+    // Validate that all required form fields have values, then submit
+    function validateSubmission(form) {
+        var firstName = document.getElementById('first-name').value;
+        var lastName = document.getElementById('last-name').value;
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('current-password').value;
+
+        if (!firstName || !lastName || !username || !password) {
+            // TODO: Display error messaging to the user
+        } else {
+            form.submit();
+        }
+    };
+
+
+    // Toggle card expansion function
+    function toggleCardExpansion(e) {
+        // Get the hidden divs on the given card
+        var card = e.parentNode;
+        var cardTitle = e.querySelector('#card-title');
+        var toggleIcon = card.querySelector('#toggle-icon');
+        var profileDiv = card.querySelector('#profile-div');
+        var vacationPolicyDiv = card.querySelector('#vacation-policy-div');
+        var updateButtonDiv = card.querySelector('#update-button-div');
+
+        // Toggle the visibility of hidden divs
+        if (toggleIcon.innerHTML == 'expand_more') {
+            cardTitle.innerHTML = 'Edit User';
+            toggleIcon.innerHTML = 'expand_less';
+            profileDiv.style.display = 'block';
+            vacationPolicyDiv.style.display = 'block';
+            updateButtonDiv.style.display = 'block';
+        } else {
+            cardTitle.innerHTML = 'Full Name';
+            toggleIcon.innerHTML = 'expand_more';
+            profileDiv.style.display = 'none';
+            vacationPolicyDiv.style.display = 'none';
+            updateButtonDiv.style.display = 'none';
+        }
+
+        // Toggle read only attribute of editable fields
+        var annualAccrualDays = card.querySelector('#annual-accrual-days');
+        var maxAllowableAccrualDays = card.querySelector('#max-allowable-accrual-days');
+        annualAccrualDays.readOnly = !annualAccrualDays.readOnly;
+        maxAllowableAccrualDays.readOnly = !maxAllowableAccrualDays.readOnly;
+    };
+</script>
