@@ -26,7 +26,8 @@
         function toggleCardExpansion(e) {
             // Get the hidden divs on the given card
             var card = e.parentNode;
-            var cardTitle = e.querySelector('#card-title');
+            var cardTitleMinimized = e.querySelector('#card-title-minimized');
+            var cardTitleExpanded = e.querySelector('#card-title-expanded');
             var toggleIcon = card.querySelector('#toggle-icon');
             var profileDiv = card.querySelector('#profile-div');
             var vacationPolicyDiv = card.querySelector('#vacation-policy-div');
@@ -34,17 +35,19 @@
 
             // Toggle the visibility of hidden divs
             if (toggleIcon.innerHTML == 'expand_more') {
-                cardTitle.innerHTML = 'Edit {{ user.first_name }}\'s Settings';
+                cardTitleMinimized.style.display = 'block';
+                cardTitleExpanded.style.display = 'none';
                 toggleIcon.innerHTML = 'expand_less';
-                profileDiv.style.display = 'block';
-                vacationPolicyDiv.style.display = 'block';
-                updateButtonDiv.style.display = 'block';
-            } else {
-                cardTitle.innerHTML = '{{ user.first_name }} {{ user.last_name }}';
-                toggleIcon.innerHTML = 'expand_more';
                 profileDiv.style.display = 'none';
                 vacationPolicyDiv.style.display = 'none';
                 updateButtonDiv.style.display = 'none';
+            } else {
+                cardTitleMinimized.style.display = 'none';
+                cardTitleExpanded.style.display = 'block';
+                toggleIcon.innerHTML = 'expand_more';
+                profileDiv.style.display = 'block';
+                vacationPolicyDiv.style.display = 'block';
+                updateButtonDiv.style.display = 'block';
             }
 
             // Toggle read only attribute of editable fields
