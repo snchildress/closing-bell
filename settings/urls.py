@@ -1,8 +1,12 @@
-from django.urls import path
+from django.urls import include, path
 from . import views
 
+user_patterns = [
+    path('<int:id>', views.user_settings),
+    path('new', views.create_new_user),
+]
 
 urlpatterns = [
-    path('user/<int:id>', views.user_settings),
+    path('user/', include(user_patterns)),
     path('users/all', views.all_users_settings),
 ]

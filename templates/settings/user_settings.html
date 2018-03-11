@@ -7,7 +7,13 @@
                              max-width: 750px;
                              margin: auto;
                              margin-top: 100px;">
-    <h2 class="mdc-typography--display3">User Settings</h2>
+    <h2 class="mdc-typography--display3">
+        {% if new_user %}
+            Create New User
+        {% else %}
+            User Settings
+        {% endif %}
+    </h2>
 
     <form>
         <div style="width: 80%; margin: auto;">
@@ -84,35 +90,52 @@
             <!-- Current password field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="current-password" type="password" />
-                <label class="mdc-text-field__label" for="current-password">Current Password</label>
+                <label class="mdc-text-field__label" for="current-password">
+                    {% if new_user %}
+                        Password
+                    {% else %}
+                        Current Password
+                    {% endif %}
+                </label>
                 <div class="mdc-line-ripple"></div>
             </div>
         </div>
 
         <!-- New password div divided into two columns -->
-        <div style="width: 80%; margin: auto;">
-            <!-- New password field -->
-            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="new-password" type="password" />
-                <label class="mdc-text-field__label" for="new-password">New Password</label>
-                <div class="mdc-line-ripple"></div>
-            </div>
+        {% if not new_user %}
+            <div style="width: 80%; margin: auto;">
+                <!-- New password field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="new-password" type="password" />
+                    <label class="mdc-text-field__label" for="new-password">New Password</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
 
-            <!-- New password confirmation field -->
-            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="new-password-confirmation" type="password" />
-                <label class="mdc-text-field__label" for="new-password-confirmation">New Password Confirmation</label>
-                <div class="mdc-line-ripple"></div>
+                <!-- New password confirmation field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="new-password-confirmation" type="password" />
+                    <label class="mdc-text-field__label" for="new-password-confirmation">New Password Confirmation</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
             </div>
-        </div>
+        {% endif %}
 
         <!-- Form action buttons -->
         <div style="width: 80%;
                     margin: auto;
-                    margin-top: 200px;">
+                    {% if new_user %}
+                        margin-top: 125px;">
+                    {% else %}
+                        margin-top: 190px;">
+                    {% endif %}
             <!-- Update settings button -->
             <button class="mdc-button mdc-button--raised" type="button" style="float: right;" data-mdc-auto-init="MDCRipple">
-                <i class="material-icons mdc-button__icon">check</i>Update
+                <i class="material-icons mdc-button__icon">check</i>
+                {% if new_user %}
+                    Create
+                {% else %}
+                    Update
+                {% endif %}
             </button>
 
             <!-- Reset settings values button -->
@@ -121,7 +144,8 @@
                            width: 110px;
                            margin-right: 20px;"
                     data-mdc-auto-init="MDCRipple">
-                <i class="material-icons mdc-button__icon">refresh</i>Reset
+                <i class="material-icons mdc-button__icon">refresh</i>
+                    Reset
             </button>
         </div>
     </form>
