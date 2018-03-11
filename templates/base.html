@@ -47,8 +47,12 @@
                     <button class="mdc-toolbar__menu-icon" id="menu-button">
                         <i class="fas fa-user"></i>
                     </button>
-                    <div style="margin: 60px 20px 0 0;" class="mdc-menu" tabindex="-1" data-mdc-auto-init="MDCMenu" dir="rtl">
+                    <div style="margin: 45px 20px 0 0;" class="mdc-menu" tabindex="-1" data-mdc-auto-init="MDCMenu" dir="rtl">
                         <ul class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
+                            <li class="mdc-list-item" role="menuitem" tabindex="-1" aria-disabled="true">
+                                {{ user.get_full_name }}
+                            </li>
+                            <li class="mdc-list-divider" role="separator"></li>
                             <a href="{% url 'user_settings' request.user.profile.uuid %}" style="text-decoration: none;
                                                                                                  color: inherit;">
                                 <li class="mdc-list-item" role="menuitem" tabindex="0">
