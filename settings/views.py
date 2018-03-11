@@ -91,7 +91,7 @@ def create_new_user(request):
             print(e)
             pass
 
-        return render(request, 'settings/user_settings.html', context)
+        return redirect('all_users_settings')
 
 # TODO Make authentication required
 def all_users_settings(request):
