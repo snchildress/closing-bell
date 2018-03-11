@@ -88,6 +88,47 @@
     </form>
 </div>
 
+<!-- Minimized Card -->
+<div class="mdc-card" style="padding-bottom: 50px;
+                             text-align: center;
+                             max-width: 750px;
+                             margin: auto;
+                             margin-top: 50px;
+                             margin-bottom: 50px;
+                             padding-top: 50px;">
+    <!-- Name and expand button div -->
+    <div style="width: 80%;
+                margin: auto;
+                height: 30px;">
+        <span style="float: right;">
+            <i class="material-icons expand-less">
+                expand_more
+            </i>
+        </span>
+        <h5 class="mdc-typography--display1 mdc-typography--adjust-margin"
+            style="float: left;">
+            Full Name
+        </h5>
+    </div>
+
+    <!-- Username and current password fields -->
+    <div style="width: 80%; margin: auto;">
+        <!-- Username field -->
+        <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+            <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" readonly />
+            <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
+            <div class="mdc-line-ripple"></div>
+        </div>
+
+        <!-- Current password field -->
+        <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+            <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" readonly />
+            <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
+            <div class="mdc-line-ripple"></div>
+        </div>
+    </div>
+</div>
+
 <script>
     // Get submit button and form elements
     var submitButton = document.getElementById('submit-button');
