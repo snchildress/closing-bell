@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    {% for user in users %}
-        {% include './partials/user_settings_partial.html' %}
-    {% endfor %}
+    <div style="margin-top: 100px;">
+        {% for user in users %}
+            {% include './partials/user_settings_partial.html' %}
+        {% endfor %}
+    </div>
 {% endblock %}
