@@ -88,18 +88,21 @@
     </form>
 </div>
 
-<!-- Minimized Card -->
-<div class="mdc-card" style="padding-bottom: 50px;
+
+<!-- Expandable card in minimized form -->
+<div class="mdc-card" style="padding-top: 1px;
+                             padding-bottom: 50px;
                              text-align: center;
                              max-width: 750px;
                              margin: auto;
                              margin-top: 50px;
-                             margin-bottom: 50px;
-                             padding-top: 50px;">
-    <!-- Name and expand button div -->
+                             margin-bottom: 50px;">
+
+    <!-- Name and expansion button div -->
     <div style="width: 80%;
                 margin: auto;
-                height: 30px;">
+                height: 15px;
+                padding-top: 50px;">
         <span style="float: right;">
             <i class="material-icons expand-less">
                 expand_more
@@ -111,23 +114,83 @@
         </h5>
     </div>
 
-    <!-- Username and current password fields -->
-    <div style="width: 80%; margin: auto;">
-        <!-- Username field -->
-        <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-            <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" readonly />
-            <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
-            <div class="mdc-line-ripple"></div>
+
+    <form method="POST" id="form" action="">
+    {% csrf_token %}
+        <!-- Profile section -->
+        <div style="width: 80%;
+                    margin: auto;
+                    margin-top: 50px;
+                    display: none;">
+            <div style="float: left;">
+                PROFILE
+            </div>
+            <br />
+
+            <!-- Name div divided into two columns -->
+            <div>
+                <!-- First name input field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="first-name" name="first-name" type="text" value="{{ first_name }}" />
+                    <label class="mdc-text-field__label" for="first-name">First Name</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- Last name input field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="last-name" name="last-name" type="text" value="{{ last_name }}" />
+                    <label class="mdc-text-field__label" for="last-name">Last Name</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
         </div>
 
-        <!-- Current password field -->
-        <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-            <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" readonly />
-            <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
-            <div class="mdc-line-ripple"></div>
+        <!-- Vacation policy settings section -->
+        <div style="width: 80%;
+                    margin: auto;
+                    margin-top: 75px;
+                    display: none;">
+            <div style="float: left;">
+                VACATION POLICY
+            </div>
         </div>
-    </div>
+        <br />
+
+        <!-- Username and current password fields -->
+        <div style="width: 80%; margin: auto;">
+            <!-- Username field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" readonly />
+                <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <!-- Current password field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" readonly />
+                <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <!-- Form action buttons -->
+        <div style="width: 80%;
+                    margin: auto;
+                    margin-top: 125px;
+                    display: none;">
+            <!-- Update settings button -->
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>
+                    Update
+            </button>
+        </div>
+    </form>
 </div>
+
 
 <script>
     // Get submit button and form elements
