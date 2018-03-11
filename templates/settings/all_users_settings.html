@@ -63,5 +63,18 @@
                 element.style.display = 'none';
             }
         };
+
+
+        function updateUserSettings(e) {
+            // Get form fields
+            var form = e.parentNode.parentNode;
+            var card = form.parentNode;
+            var firstName = card.querySelector('#first-name');
+            var lastName = card.querySelector('#last-name');
+            var annualAccrualDays = card.querySelector('#annual-accrual-days');
+            var maxAllowableAccrualDays = card.querySelector('max-allowable-accrual-days');
+
+            form.submit();
+        };
     </script>
 {% endblock %}
