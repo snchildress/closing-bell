@@ -110,7 +110,7 @@
         </div>
 
         <!-- Profile UUID -->
-        <input name="profile-uuid" type="hidden" value="{{ user.profile.uuid }}" />
+        <input id="profile-uuid" name="profile-uuid" type="hidden" value="{{ user.profile.uuid }}" />
 
         <!-- Form action buttons -->
         <div id="update-button-div"
@@ -126,15 +126,16 @@
             </button>
 
             <!-- Delete user button -->
-            <a href="{% url 'delete_user' user.profile.uuid %}">
+            <!-- <a href="{% url 'delete_user' user.profile.uuid %}"> -->
                 <button class="mdc-button mdc-button--stroked" type="button"
                         style="float: right;
                                margin-right: 20px;"
-                        id="reset-button" data-mdc-auto-init="MDCRipple">
+                        id="delete-user-button" onclick="openDeleteUserModal(this)"
+                        data-mdc-auto-init="MDCRipple">
                     <i class="material-icons mdc-button__icon">delete</i>
                     Delete
                 </button>
-            </a>
+            <!-- </a> -->
         </div>
     </form>
 </div>
