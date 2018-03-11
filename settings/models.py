@@ -34,11 +34,5 @@ def create_user_profile(sender, instance, created, **kwargs):
     """
     if created and not instance.is_superuser:
         Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    """
-    Save the corresponding Profile record when saving a User record
-    """
-    if not instance.is_superuser:
+    else:
         instance.profile.save()

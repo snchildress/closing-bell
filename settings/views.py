@@ -90,6 +90,7 @@ def create_new_user(request):
 
         except Exception as e:
             print(e)
+            pass
 
         return render(request, 'settings/user_settings.html', context)
 
@@ -98,6 +99,29 @@ def all_users_settings(request):
     # Must be a staff user to view all users' settings
     if not request.user.is_staff:
         return redirect('user_settings', request.user.profile.uuid)
+
+    if request.method == 'POST':
+        try:
+            data = request.POST
+            uuid = data['profile-uuid']
+            first_name = data['first-name']
+            last_name = data['last-name']
+            annual_accrual_days = data['annual-accrual-days']
+            max_allowable_accrual_days = data['max-allowable-accrual-days']
+
+            # Query all User and Profile fields for the given Profile UUID
+            user = User.objects.filter(profile__uuid=uuid) \
+                .select_related('profile')[0]
+            user.first_name = first_name
+            user.last_name = last_name
+            user.profile.annual_accrual_days = annual_accrual_days
+            user.profile.max_allowable_accrual_days = \
+                max_allowable_accrual_days
+            user.save()
+        
+        except Exception as e:
+            print(e)
+            pass
 
     # Query all User and Profile records
     users = User.objects.all().select_related('profile')
