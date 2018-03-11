@@ -15,32 +15,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
-        <!-- Global CSS -->
-        <style>
-            /* Overwrite default Google Material Design Components color schemes */
-            :root {
-                --mdc-theme-primary: #158CAF;
-            }
-
-            body {
-                background: #FAFAFA;
-            }
-
-            /* Menu icon size */
-            .mdc-toolbar__menu-icon {
-                font-size: 22px;
-            }
-
-            /* Remove box shadow on icon click */
-            #menu-button:active,
-            #menu-button:focus,
-            #menu-button.active {
-                background-image: none;
-                outline: 0;
-                -webkit-box-shadow: none;
-                        box-shadow: none;
-            }
-        </style>
+        <!-- Custom Global CSS -->
+        <link rel="stylesheet" href="{% static "closing_bell.css" %}" type="text/css" >
 
         <!-- Font Awesome JS -->
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
