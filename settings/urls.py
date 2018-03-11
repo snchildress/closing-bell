@@ -3,7 +3,7 @@ from . import views
 
 user_patterns = [
     path('<uuid:uuid>', views.user_settings, name='user_settings'),
-    path('new', views.create_new_user),
+    path('new', views.create_new_user, name='new_user'),
 ]
 
 urlpatterns = [

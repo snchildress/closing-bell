@@ -7,6 +7,20 @@
         {% endfor %}
     </div>
 
+    <a href="{% url 'new_user' %}">
+        <button class="mdc-fab material-icons"
+                aria-label="add"
+                data-mdc-auto-init="MDCRipple"
+                style="position: fixed;
+                        right: 25px;
+                        bottom: 25px;
+                        background: #158CAF;">
+            <span class="mdc-fab__icon">
+                add
+            </span>
+        </button>
+    </a>
+
     <script>
         // Toggle card expansion function
         function toggleCardExpansion(e) {
