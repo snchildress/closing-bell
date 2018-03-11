@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from settings.models import Profile
 
 
+# External views
 # TODO Make authentication required
 def user_settings(request, uuid):
     context = {}
