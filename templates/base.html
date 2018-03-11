@@ -17,6 +17,10 @@
                 --mdc-theme-primary: #158CAF;
             }
 
+            body {
+                background: #FAFAFA;
+            }
+
             /* Menu icon size */
             .mdc-toolbar__menu-icon {
                 font-size: 22px;
@@ -37,7 +41,7 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     </head>
 
-    <body>
+    <body class="mdc-typography">
         <!-- Navigation toolbar -->
         <header class="mdc-toolbar mdc-toolbar--fixed">
             <div class="mdc-toolbar__row">
@@ -70,9 +74,11 @@
             </div>
         </header>
 
-        <!-- Body content -->
-        {% block body %}
-        {% endblock %}
+        <!-- Body content with top margin to adjust for toolbar -->
+        <div class="mdc-toolbar-fixed-adjust">
+            {% block body %}
+            {% endblock %}
+        </div>
 
         <!-- Google Material Design Components JavaScript -->
         <script src="https://unpkg.com/material-components-web@0.31.0/dist/material-components-web.min.js"></script>
