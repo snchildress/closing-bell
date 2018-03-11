@@ -1,90 +1,116 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div style="padding-top: 1px; text-align: center;">
-    <h2 class="mdc-typography--display3">All Users' Settings</h2>
-</div>
-
 <div class="mdc-card" style="padding-top: 1px;
                              padding-bottom: 50px;
                              text-align: center;
                              max-width: 750px;
-                             margin: auto;">
+                             margin: auto;
+                             margin-top: 100px;">
+    <h2 class="mdc-typography--display3">
+        Edit User
+    </h2>
 
-    <form>
+    <form method="POST" id="form" action="">
+    {% csrf_token %}
+        <div style="width: 80%; margin: auto;">
+            <div style="float: left;">
+                PROFILE
+            </div>
+        </div>
+        <br />
+
         <!-- Name div divided into two columns -->
         <div style="width: 80%; margin: auto;">
             <!-- First name input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="first-name" type="text" />
+                <input class="mdc-text-field__input" id="first-name" name="first-name" type="text" value="{{ first_name }}" />
                 <label class="mdc-text-field__label" for="first-name">First Name</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
             <!-- Last name input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="last-name" type="text" />
+                <input class="mdc-text-field__input" id="last-name" name="last-name" type="text" value="{{ last_name }}" />
                 <label class="mdc-text-field__label" for="last-name">Last Name</label>
                 <div class="mdc-line-ripple"></div>
             </div>
         </div>
 
-        <!-- Email address input field -->
-        <div style="width: 80%; margin: auto;">
-            <div class="mdc-text-field" style="width: 100%;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="email-address" type="email" />
-                <label class="mdc-text-field__label" for="email-address">Email Address</label>
-                <div class="mdc-line-ripple"></div>
+        <br />
+        <br />
+        <br />
+
+        <!-- Vacation policy settings section -->
+        <div style="width: 80%; margin: auto; margin-top: 75px;">
+            <div style="float: left;">
+                VACATION POLICY
             </div>
         </div>
+        <br />
 
-        <!-- Timezone dropdown menu -->
-        <div style="width: 80%; margin: auto; margin-top: 18px;">
-            <div class="mdc-select" role="listbox" style="width: 100%;" data-mdc-auto-init="MDCSelect">
-                <div class="mdc-select__surface" tabindex="0">
-                    <div class="mdc-select__label">Timezone</div>
-                    <div class="mdc-select__selected-text"></div>
-                    <div class="mdc-select__bottom-line"></div>
-                </div>
+        <!-- Username and current password fields -->
+        <div style="width: 80%; margin: auto;">
+            <!-- Username field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" />
+                <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
 
-                <div class="mdc-menu mdc-select__menu">
-                    <ul class="mdc-list mdc-menu__items">
-                        <li class="mdc-list-item" role="option" tabindex="0">
-                            US/Pacific
-                        </li>
-                        <li class="mdc-list-item" role="option" tabindex="0">
-                            US/Mountain
-                        </li>
-                        <li class="mdc-list-item" role="option" tabindex="0">
-                            US/Central
-                        </li>
-                        <li class="mdc-list-item" role="option" tabindex="0">
-                            US/Eastern
-                        </li>
-                    </ul>
-                </div>
+            <!-- Current password field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" />
+                <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
+                <div class="mdc-line-ripple"></div>
             </div>
         </div>
 
         <!-- Form action buttons -->
         <div style="width: 80%;
                     margin: auto;
-                    margin-top: 50px;">
+                    margin-top: 125px;">
             <!-- Update settings button -->
-            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" data-mdc-auto-init="MDCRipple">
-                <i class="material-icons mdc-button__icon">check</i>Update
-            </button>
-
-            <!-- Reset settings values button -->
-            <button class="mdc-button mdc-button--stroked" type="button"
-                    style="float: right;
-                           width: 110px;
-                           margin-right: 20px;"
-                    data-mdc-auto-init="MDCRipple">
-                <i class="material-icons mdc-button__icon">refresh</i>Reset
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>
+                    Update
             </button>
         </div>
     </form>
-
 </div>
+
+<script>
+    // Get submit button and form elements
+    var submitButton = document.getElementById('submit-button');
+    var form = document.getElementById('form');
+
+    // Submit form on submit button click
+    submitButton.addEventListener('click', function() {
+        validateSubmission(form);
+    });
+
+
+    // Get reset button
+    var resetButton = document.getElementById('reset-button');
+
+    // Refresh page on reset button click
+    resetButton.addEventListener('click', function() {
+        location.reload();
+    });
+
+
+    // Validate that all required form fields have values, then submit
+    function validateSubmission(form) {
+        var firstName = document.getElementById('first-name').value;
+        var lastName = document.getElementById('last-name').value;
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('current-password').value;
+
+        if (!firstName || !lastName || !username || !password) {
+            // TODO: Display error messaging to the user
+        } else {
+            form.submit();
+        }
+    };
+</script>
 {% endblock %}
