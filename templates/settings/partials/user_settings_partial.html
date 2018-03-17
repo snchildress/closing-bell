@@ -126,16 +126,14 @@
             </button>
 
             <!-- Delete user button -->
-            <!-- <a href="{% url 'delete_user' user.profile.uuid %}"> -->
-                <button class="mdc-button mdc-button--stroked" type="button"
-                        style="float: right;
-                               margin-right: 20px;"
-                        id="delete-user-button" onclick="openDeleteUserModal(this)"
-                        data-mdc-auto-init="MDCRipple">
-                    <i class="material-icons mdc-button__icon">delete</i>
-                    Delete
-                </button>
-            <!-- </a> -->
+            <button class="mdc-button" type="button"
+                    style="float: right;
+                            margin-right: 20px;"
+                    id="delete-user-button" onclick="openDeleteUserModal(this)"
+                    data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">delete</i>
+                Delete
+            </button>
         </div>
     </form>
 </div>
