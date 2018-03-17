@@ -29,14 +29,14 @@
             <!-- First name input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="first-name" name="first-name" type="text" value="{{ first_name }}" />
-                <label class="mdc-text-field__label" for="first-name">First Name</label>
+                <label class="mdc-text-field__label" for="first-name">First Name*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
             <!-- Last name input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="last-name" name="last-name" type="text" value="{{ last_name }}" />
-                <label class="mdc-text-field__label" for="last-name">Last Name</label>
+                <label class="mdc-text-field__label" for="last-name">Last Name*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
         </div>
@@ -53,7 +53,7 @@
             <!-- Username field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="username" name="username" type="email" value="{{ username }}" />
-                <label class="mdc-text-field__label" for="username">Username / Email Address</label>
+                <label class="mdc-text-field__label" for="username">Username / Email Address*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
@@ -62,9 +62,9 @@
                 <input class="mdc-text-field__input" id="current-password" name="password" type="password" />
                 <label class="mdc-text-field__label" for="current-password">
                     {% if new_user %}
-                        Password
+                        Password*
                     {% else %}
-                        Current Password
+                        Current Password*
                     {% endif %}
                 </label>
                 <div class="mdc-line-ripple"></div>
@@ -85,14 +85,14 @@
                 <!-- Username field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
                     <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" step="0.01" />
-                    <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days</label>
+                    <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days*</label>
                     <div class="mdc-line-ripple"></div>
                 </div>
 
                 <!-- Current password field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
                     <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" step="0.01" />
-                    <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days</label>
+                    <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days*</label>
                     <div class="mdc-line-ripple"></div>
                 </div>
             </div>
