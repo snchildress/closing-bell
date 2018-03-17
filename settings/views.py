@@ -6,12 +6,13 @@ from django.contrib.auth import (
     login
 )
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from settings.models import Profile
 
 
 # External views
-# TODO Make authentication required
+@login_required
 def user_settings(request, uuid):
     if request.method == 'POST':
         try:
@@ -56,7 +57,7 @@ def user_settings(request, uuid):
 
     return render(request, 'settings/user_settings.html', context)
 
-# TODO Make authentication required
+@login_required
 def create_new_user(request):
     # Must be a staff user to create a new user
     if not request.user.is_staff:
@@ -93,7 +94,7 @@ def create_new_user(request):
 
         return redirect('all_users_settings')
 
-# TODO Make authentication required
+@login_required
 def all_users_settings(request):
     # Must be a staff user to view all users' settings
     if not request.user.is_staff:
@@ -127,7 +128,7 @@ def all_users_settings(request):
     context = {'users': users}
     return render(request, 'settings/all_users_settings.html', context)
 
-# TODO Make authentication required
+@login_required
 def delete_user(request, uuid):
     # Must be a staff user to delete users
     if not request.user.is_staff:
