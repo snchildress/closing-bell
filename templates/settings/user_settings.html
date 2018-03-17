@@ -155,7 +155,9 @@
 
         // Set the max allowable accrual days to 1.5 times the annual accrual days on focus out
         annualAccrualDays.addEventListener('focusout', function() {
-            maxAllowableAccrualDays.value = 1.5 * annualAccrualDays.value;
+            var defaultMaxAllowableAccrualDays = 1.5 * annualAccrualDays.value;
+            defaultMaxAllowableAccrualDays = defaultMaxAllowableAccrualDays.toFixed(2);
+            maxAllowableAccrualDays.value = defaultMaxAllowableAccrualDays;
             maxAllowableAccrualDays.focus();
         });
     {% endif %}
