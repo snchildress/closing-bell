@@ -19,7 +19,11 @@ class Profile(models.Model):
         decimal_places=2,
         default=0
     )
-    max_allowable_accrual_days = models.IntegerField(default=0)
+    max_allowable_accrual_days = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        default=0
+    )
     create_timestamp = models.DateTimeField('Creation Date',
                                             auto_now_add=True)
     update_timestamp = models.DateTimeField('Last Updated Date',
