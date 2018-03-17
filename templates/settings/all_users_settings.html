@@ -14,12 +14,15 @@
                                                 padding-right: 25px;
                                                 width: 250px;
                                                 margin: auto;">
-            <h5 class="mdc-typography--display1" id="delete-user-title" style="height: 15px;">
-                Delete User?
-            </h5>
-            <div>
-                Are you sure you want to delete Full Name?
-            </div>
+            <!-- Delete user title -->
+            <h5 class="mdc-typography--display1" id="delete-user-title" style="height: 15px;"></h5>
+
+            <!-- Delete user message -->
+            <div id="delete-user-message"></div>
+            <br />
+            <br />
+
+            <!-- Delete user action buttons -->
             <footer class="mdc-dialog__footer">
                 <button type="button" class="mdc-button mdc-dialog__footer__button
                                              mdc-dialog__footer__button--cancel">
@@ -105,18 +108,22 @@
             var annualAccrualDays = card.querySelector('#annual-accrual-days');
             var maxAllowableAccrualDays = card.querySelector('max-allowable-accrual-days');
 
+            // Submit the update settings form
             form.submit();
         };
 
 
         // Open the delete user modal
         function openDeleteUserModal(e) {
+            // Get the delete user modal and open it
             var deleteUserModal = document.getElementById('delete-user-modal');
             deleteUserModal.MDCDialog.show();
 
-            // Get user to delete's UUID
+            // Get user to delete's info
             var form = e.parentNode.parentNode;
             var profileUUID = form.querySelector('#profile-uuid').value;
+            var firstName = form.querySelector('#first-name').value;
+            var lastName = form.querySelector('#last-name').value;
 
             // Create a string of the delete user URL using the request user's UUID
             var deleteUserURL = "{% url 'delete_user' user.profile.uuid %}";
@@ -127,6 +134,12 @@
             // Use the correct URL for the delete user button
             var deleteUserURLHref = document.getElementById('delete-user-url');
             deleteUserURLHref.setAttribute('href', deleteUserURL);
+
+            // Use the selected user's name to message in the delete user modal
+            var deleteUserTitle = document.getElementById('delete-user-title');
+            var deleteUserMessage = document.getElementById('delete-user-message');
+            deleteUserTitle.innerHTML = 'Delete ' + firstName +'?';
+            deleteUserMessage.innerHTML = 'Are you sure you want to delete ' + firstName + ' ' + lastName + '? Deletions cannot be undone.';
         };
     </script>
 {% endblock %}
