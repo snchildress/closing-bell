@@ -24,14 +24,19 @@
 
             <!-- Delete user action buttons -->
             <footer class="mdc-dialog__footer">
+                <!-- Cancel button to close modal without action -->
                 <button type="button" class="mdc-button mdc-dialog__footer__button
                                              mdc-dialog__footer__button--cancel">
+                    <i class="material-icons mdc-button__icon">undo</i>
                     Cancel
                 </button>
+
+                <!-- Delete button to execute delete action -->
                 <a id="delete-user-url" href="">
                     <button type="button" class="mdc-button mdc-dialog__footer__button
                                                 mdc-button--raised mdc-dialog__footer__button--accept
                                                 mdc-dialog__action">
+                        <i class="material-icons mdc-button__icon">delete</i>
                         Delete
                     </button>
                 </a>
