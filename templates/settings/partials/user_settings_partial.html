@@ -126,6 +126,18 @@
                     Update
             </button>
 
+            <!-- User settings button -->
+            <a href="{% url 'user_settings' user.profile.uuid %}">
+                <button class="mdc-button" type="button"
+                        style="float: right;
+                                margin-right: 20px;"
+                        id="user-settings-button"
+                        data-mdc-auto-init="MDCRipple">
+                    <i class="fas fa-user"></i>&nbsp;&nbsp;
+                    Settings
+                </button>
+            </a>
+
             <!-- Delete user button -->
             <button class="mdc-button" type="button"
                     style="float: right;
