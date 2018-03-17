@@ -6,14 +6,28 @@ from django.contrib.auth import (
     login
 )
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import (
+    login_required,
+    user_passes_test
+)
 
 from settings.models import Profile
+
+
+# Internal helper
+def is_staff(user):
+    """
+    Validates that a user is authenticated with staff access
+    """
+    return user.is_staff
 
 
 # External views
 @login_required
 def user_settings(request, uuid):
+    """
+    Displays or edits a user's settings
+    """
     if request.method == 'POST':
         try:
             # Get form field submissions
@@ -57,12 +71,11 @@ def user_settings(request, uuid):
 
     return render(request, 'settings/user_settings.html', context)
 
-@login_required
+@user_passes_test(is_staff)
 def create_new_user(request):
-    # Must be a staff user to create a new user
-    if not request.user.is_staff:
-        return redirect('user_settings', request.user.profile.uuid)
-
+    """
+    Creates a new user in the system
+    """
     context = {'new_user': True}
 
     if request.method == 'GET':
@@ -94,12 +107,11 @@ def create_new_user(request):
 
         return redirect('all_users_settings')
 
-@login_required
+@user_passes_test(is_staff)
 def all_users_settings(request):
-    # Must be a staff user to view all users' settings
-    if not request.user.is_staff:
-        return redirect('user_settings', request.user.profile.uuid)
-
+    """
+    Displays and allows for edits to all users in the system
+    """
     if request.method == 'POST':
         try:
             data = request.POST
@@ -128,12 +140,11 @@ def all_users_settings(request):
     context = {'users': users}
     return render(request, 'settings/all_users_settings.html', context)
 
-@login_required
+@user_passes_test(is_staff)
 def delete_user(request, uuid):
-    # Must be a staff user to delete users
-    if not request.user.is_staff:
-        return redirect('user_settings', request.user.profile.uuid)
-
+    """
+    Permanently deletes a user
+    """
     try:
         user = User.objects.get(profile__uuid=uuid)
         user.delete()
