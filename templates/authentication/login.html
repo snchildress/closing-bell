@@ -33,7 +33,6 @@
                     <div class="mdc-line-ripple"></div>
                 </div>
 
-
                 <!-- Messages to the user about invalid credentials -->
                 {% if messages %}
                     {% for message in messages %}
@@ -64,8 +63,12 @@
     var username = document.getElementById('username');
     var password = document.getElementById('password');
 
-    // Focus on the username field on page load
-    username.focus();
+    // Focus on first blank input field on page load
+    {% if username %}
+        password.focus();
+    {% else %}
+        username.focus();
+    {% endif %}
 
     // Validate that the form contains a username and password and submit
     loginButton.addEventListener('click', function() {

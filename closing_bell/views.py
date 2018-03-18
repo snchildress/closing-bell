@@ -31,7 +31,8 @@ def login_auth(request):
     # Message that invalid credentials were given
     else:
         messages.error(request, 'Invalid username or password.')
-        return redirect('login')
+        context = {'username': username}
+        return render(request, 'authentication/login.html', context)
 
 def logout_auth(request):
     """
