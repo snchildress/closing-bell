@@ -22,3 +22,16 @@ body {
     -webkit-box-shadow: none;
             box-shadow: none;
 }
+
+/* Custom CSS for Django messsages classes */
+.success {
+    color: #158CAF;
+}
+
+.warning {
+    color: #9F6000;
+}
+
+.error {
+    color: #CC0000;
+}

@@ -123,6 +123,19 @@
                     {% else %}
                         margin-top: 190px;">
                     {% endif %}
+
+            <!-- Messages to the user about action result(s) -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{{ message.tags }}" style="float: left;">
+                        {{ message }}
+                    </div>
+                    {% if not forloop.last %}
+                        <br />
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
             <!-- Update settings button -->
             <button class="mdc-button mdc-button--raised" type="button" style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
                 <i class="material-icons mdc-button__icon">check</i>

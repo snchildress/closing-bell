@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import (
     login_required,
     user_passes_test
 )
+from django.contrib import messages
 
 from settings.models import Profile
 
@@ -40,20 +41,31 @@ def user_settings(request, uuid):
 
             user = authenticate(request, username=username,
                                 password=password)
-            if user is not None:
+            if user:
                 # Update the user's session and authenticate again
                 if new_password:
                     user.set_password(new_password)
                     update_session_auth_hash(request, user)
                     login(request, user)
+                    messages.success(request, 'Password successfully updated.')
                 # Use the new user settings to update the database record
-                user.first_name = first_name
-                user.last_name = last_name
-                user.username = username
+                if user.first_name != first_name \
+                        or user.last_name != last_name \
+                        or user.username != user.username:
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.username = username
+                    messages.success(request, 'Name successfully updated.')
+                # Otherwise message that no updates were requested
+                elif not new_password:
+                    messages.warning(request, 'You didn\'t request any updates.')
                 user.save()
+            else:
+                messages.error(request, 'Invalid password!')
 
         except Exception as e:
             print(e)
+            messages.error(request, 'Oops! Something went wrong.')
             pass
 
     context = {}
