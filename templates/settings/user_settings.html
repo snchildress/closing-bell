@@ -189,6 +189,16 @@
         var username = document.getElementById('username');
         var password = document.getElementById('current-password');
 
+        // Get additional fields depending on page context
+        {% if new_user %}
+            var annualAccrualDays = document.getElementById('annual-accrual-days');
+            var maxAllowableAccrualDays = document.getElementById('max-allowable-accrual-days');
+        {% else %}
+            var newPassword = document.getElementById('new-password');
+            var newPasswordConfirmation = document.getElementById('new-password-confirmation');
+        {% endif %}
+
+        // Validate that required fields have values
         if (!firstName.value) {
             firstName.focus();
         } else if (!lastName.value) {
@@ -197,6 +207,19 @@
             username.focus();
         } else if (!password.value) {
             password.focus();
+        } else if
+        {% if new_user %}
+            // Validate that new user fields have values
+            (!annualAccrualDays.value) {
+                annualAccrualDays.focus();
+            } else if (!maxAllowableAccrualDays.value) {
+                maxAllowableAccrualDays.focus();
+        {% else %}
+            // Validate that new passwords match for update settings page
+            (newPassword.value != newPasswordConfirmation.value) {
+                newPassword.focus();
+        {% endif %}
+        // If all required fields have values, submit the form
         } else {
             form.submit();
         }
