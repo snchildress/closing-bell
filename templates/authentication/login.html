@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<!-- Outer login box div to center card vertically and horizontally -->
 <div class="login-box">
-    Placeholder
+    <!-- Login card -->
+    <div class="mdc-card" style="width: 600px;
+                                 padding-bottom: 50px;">
+        <!-- Login card parent div -->
+        <div style="width: 80%;
+                    text-align: center;
+                    margin: auto;">
+
+            <!-- Login card title -->
+            <h2 class="mdc-typography--display3">
+                Login
+            </h2>
+
+            <!-- Login form -->
+            <form method="POST" id="form" action="">
+            {% csrf_token %}
+                Placeholder
+            </form>
+
+        </div>
+    </div>
 </div>
 {% endblock %}
