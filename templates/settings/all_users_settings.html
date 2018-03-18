@@ -3,6 +3,25 @@
 {% block body %}
     <!-- Loop to display each user's settings -->
     <div style="margin-top: 100px;">
+        <!-- Messages to the user about action result(s) -->
+        {% if messages %}
+            <div style="padding-top: 1px;
+                        padding-bottom: 25px;
+                        text-align: center;
+                        max-width: 750px;
+                        margin: auto;
+                        margin-bottom: 15px;">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% if not forloop.last %}
+                        <br />
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
         {% for user in users %}
             {% include './partials/user_settings_partial.html' with user=user %}
         {% endfor %}

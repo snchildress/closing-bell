@@ -152,9 +152,13 @@ def all_users_settings(request):
             user.profile.max_allowable_accrual_days = \
                 max_allowable_accrual_days
             user.save()
+            messages.success(request, first_name + '\'s settings \
+                successfully updated!')
         
         except Exception as e:
             print(e)
+            messages.error(request, 'Oops! There was an issue updating ' \
+                + first_name + '\'s settings.')
             pass
 
     # Query all User and Profile records
