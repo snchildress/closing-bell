@@ -33,6 +33,10 @@ def user_settings(request, uuid):
     if not request.user.is_staff:
         uuid = request.user.profile.uuid
 
+    own_settings = True
+    if request.user.is_staff and uuid != request.user.profile.uuid:
+        own_settings = False
+
     # Query all User and Profile fields for the given Profile UUID
     user = User.objects.filter(profile__uuid=uuid) \
         .select_related('profile')[0]
@@ -51,13 +55,18 @@ def user_settings(request, uuid):
             user = authenticate(request, username=user.username,
                                 password=password)
 
-            if user:
+            # User must be authenticated or editing someone else's settings to edit
+            if user or not own_settings:
                 # Update the user's session and authenticate again
                 if new_password:
                     user.set_password(new_password)
-                    update_session_auth_hash(request, user)
-                    login(request, user)
+
+                    # Reauthenticate to avoid being signed out
+                    if own_settings:
+                        update_session_auth_hash(request, user)
+                        login(request, user)
                     messages.success(request, 'Password successfully updated.')
+
                 # Use the new user settings to update the database record
                 if user.first_name != first_name \
                         or user.last_name != last_name \
@@ -88,7 +97,8 @@ def user_settings(request, uuid):
     context = {
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'username': user.username
+        'username': user.username,
+        'own_settings': own_settings,
     }
     return render(request, 'settings/user_settings.html', context)
 
