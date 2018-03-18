@@ -111,10 +111,21 @@
             var firstName = card.querySelector('#first-name');
             var lastName = card.querySelector('#last-name');
             var annualAccrualDays = card.querySelector('#annual-accrual-days');
-            var maxAllowableAccrualDays = card.querySelector('max-allowable-accrual-days');
+            var maxAllowableAccrualDays = card.querySelector('#max-allowable-accrual-days');
 
-            // Submit the update settings form
-            form.submit();
+            // If any field is missing a value, focus on it
+            if (!firstName.value) {
+                firstName.focus();
+            } else if (!lastName.value) {
+                lastName.focus();
+            } else if (!annualAccrualDays.value) {
+                annualAccrualDays.focus();
+            } else if (!maxAllowableAccrualDays.value) {
+                maxAllowableAccrualDays.focus();
+            // Otherwise submit the form
+            } else {
+                form.submit();
+            }
         };
 
 
