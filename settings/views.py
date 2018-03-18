@@ -117,7 +117,8 @@ def create_new_user(request):
 
         except Exception as e:
             print(e)
-            pass
+            messages.error(request, 'Oops! There was an issue creating that user.')
+            return redirect('new_user')
 
         return redirect('all_users_settings')
 
