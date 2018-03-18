@@ -23,55 +23,61 @@
     </head>
 
     <body class="mdc-typography">
-        <!-- Navigation toolbar -->
-        <header class="mdc-toolbar mdc-toolbar--fixed">
-            <div class="mdc-toolbar__row">
-                <!-- Home button -->
-                <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                    <i class="fas fa-home mdc-toolbar__menu-icon"></i>
-                    {% if user.is_staff %}
-                        <a href="{% url 'all_users_settings' %}"
-                           style="color: inherit;">
-                            <i class="fas fa-users mdc-toolbar__menu-icon"></i>
-                        </a>
-                    {% endif %}
-                </section>
-
-                <!-- Centered title -->
-                <section class="mdc-toolbar__section">
-                    <span class="mdc-toolbar__title"><i class="fas fa-bell"></i>&nbsp;&nbsp;Closing Bell</span>
-                </section>
-
-                <!-- Toolbar navigation -->
-                <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-menu-anchor">
-                    <button class="mdc-toolbar__menu-icon" id="menu-button">
-                        <i class="fas fa-user"></i>
-                    </button>
-                    <div style="margin: 45px 20px 0 0;" class="mdc-menu" tabindex="-1" data-mdc-auto-init="MDCMenu" dir="rtl">
-                        <ul class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
-                            <li class="mdc-list-item" role="menuitem" tabindex="-1" aria-disabled="true">
-                                {{ user.get_full_name }}
-                            </li>
-                            <li class="mdc-list-divider" role="separator"></li>
-                            <a href="{% url 'user_settings' request.user.profile.uuid %}" style="text-decoration: none;
-                                                                                                 color: inherit;">
-                                <li class="mdc-list-item" role="menuitem" tabindex="0">
-                                    Settings
-                                </li>
+        {% if user.is_authenticated %}
+            <!-- Navigation toolbar -->
+            <header class="mdc-toolbar mdc-toolbar--fixed">
+                <div class="mdc-toolbar__row">
+                    <!-- Home button -->
+                    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                        <i class="fas fa-home mdc-toolbar__menu-icon"></i>
+                        {% if user.is_staff %}
+                            <a href="{% url 'all_users_settings' %}"
+                            style="color: inherit;">
+                                <i class="fas fa-users mdc-toolbar__menu-icon"></i>
                             </a>
-                            <a href="{% url 'logout' %}" style="text-decoration: none; color: inherit;">
-                                <li class="mdc-list-item" role="menuitem" tabindex="0">
-                                    Logout
-                                </li>
-                            </a>
-                        </ul>
-                    </div>
-                </section>
-            </div>
-        </header>
+                        {% endif %}
+                    </section>
 
-        <!-- Body content with top margin to adjust for toolbar -->
-        <div class="mdc-toolbar-fixed-adjust">
+                    <!-- Centered title -->
+                    <section class="mdc-toolbar__section">
+                        <span class="mdc-toolbar__title"><i class="fas fa-bell"></i>&nbsp;&nbsp;Closing Bell</span>
+                    </section>
+
+                    <!-- Toolbar navigation -->
+                    <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-menu-anchor">
+                        <button class="mdc-toolbar__menu-icon" id="menu-button">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div style="margin: 45px 20px 0 0;" class="mdc-menu" tabindex="-1" data-mdc-auto-init="MDCMenu" dir="rtl">
+                            <ul class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
+                                <li class="mdc-list-item" role="menuitem" tabindex="-1" aria-disabled="true">
+                                    {{ user.get_full_name }}
+                                </li>
+                                <li class="mdc-list-divider" role="separator"></li>
+                                <a href="{% url 'user_settings' request.user.profile.uuid %}" style="text-decoration: none;
+                                                                                                    color: inherit;">
+                                    <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                        Settings
+                                    </li>
+                                </a>
+                                <a href="{% url 'logout' %}" style="text-decoration: none; color: inherit;">
+                                    <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                        Logout
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </header>
+        {% endif %}
+
+        <div
+            {% if user.is_authenticated %}
+                <!-- Body content with top margin to adjust for toolbar -->
+                class="mdc-toolbar-fixed-adjust"
+            {% endif %}
+            >
             {% block body %}
             {% endblock %}
         </div>

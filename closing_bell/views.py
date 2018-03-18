@@ -37,4 +37,4 @@ def logout_auth(request):
     Log the current user out
     """
     logout(request)
-    return redirect('admin/logout/')
+    return redirect('login')
