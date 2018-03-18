@@ -1,6 +1,19 @@
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
 from settings.models import Profile
 
 from datetime import date, datetime
+
+
+# External view
+@login_required
+def request_vacation(request):
+    """
+    Renders a page to request vacation time and displays
+    previous and future requests
+    """
+    return render(request, 'scheduler/home.html')
 
 
 # Internal helper functions
