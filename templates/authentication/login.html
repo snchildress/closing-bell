@@ -4,7 +4,7 @@
 <!-- Outer login box div to center card vertically and horizontally -->
 <div class="login-box">
     <!-- Login card -->
-    <div class="mdc-card" style="width: 600px;
+    <div class="mdc-card" style="width: 500px;
                                  padding-bottom: 50px;">
         <!-- Login card parent div -->
         <div style="width: 80%;
@@ -12,16 +12,27 @@
                     margin: auto;">
 
             <!-- Login card title -->
-            <h2 class="mdc-typography--display3">
+            <h2 class="mdc-typography--display3" style="height: 20px;">
                 Login
             </h2>
 
             <!-- Login form -->
             <form method="POST" id="form" action="">
             {% csrf_token %}
-                Placeholder
-            </form>
+                <!-- Username field -->
+                <div class="mdc-text-field" style="width: 100%;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="username" name="username" type="email" value="{{ username }}" />
+                    <label class="mdc-text-field__label" for="username">Username / Email Address*</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
 
+                <!-- Password field -->
+                <div class="mdc-text-field" style="width: 100%;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="password" name="password" type="password" />
+                    <label class="mdc-text-field__label" for="password">Password*</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
