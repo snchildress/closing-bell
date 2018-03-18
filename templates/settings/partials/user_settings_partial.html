@@ -1,0 +1,152 @@
+<!-- Expandable card in minimized form -->
+<div class="mdc-card mdc-toolbar-fixed-adjust"
+     style="padding-top: 1px;
+            padding-bottom: 25px;
+            text-align: center;
+            max-width: 750px;
+            margin: auto;
+            margin-bottom: 15px;">
+
+    <!-- Name and expansion button div -->
+    <div onclick="toggleCardExpansion(this)"
+         style="width: 80%;
+                margin: auto;
+                height: 15px;
+                padding-top: 35px;">
+        <span style="float: right;">
+            <i class="material-icons"
+               id="toggle-icon"
+               style="cursor: pointer;">expand_more</i>
+        </span>
+        <h5 class="mdc-typography--display1 mdc-typography--adjust-margin"
+            id="card-title-minimized"
+            style="float: left;">
+            {{ user.first_name }} {{ user.last_name }}
+        </h5>
+        <h5 class="mdc-typography--display1 mdc-typography--adjust-margin"
+            id="card-title-expanded"
+            style="float: left;
+                   display: none;">
+            Edit {{ user.first_name }}'s Settings
+        </h5>
+    </div>
+
+    <!-- Edit user form -->
+    <form method="POST" id="form" action="">
+    {% csrf_token %}
+        <!-- Profile section -->
+        <div id="profile-div"
+             style="width: 80%;
+                    margin: auto;
+                    margin-top: 50px;
+                    display: none;">
+            <div style="float: left;">
+                PROFILE
+            </div>
+            <br />
+
+            <!-- Name div divided into two columns -->
+            <div>
+                <!-- First name input field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="first-name"
+                           name="first-name" type="text" value="{{ user.first_name }}" />
+                    <label class="mdc-text-field__label" for="first-name">
+                        First Name*
+                    </label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- Last name input field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="last-name"
+                           name="last-name" type="text" value="{{ user.last_name }}" />
+                    <label class="mdc-text-field__label" for="last-name">
+                        Last Name*
+                    </label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+            <br />
+            <br />
+
+        </div>
+
+        <!-- Vacation policy settings section -->
+        <div id="vacation-policy-div"
+             style="width: 80%;
+                    margin: auto;
+                    margin-top: 75px;
+                    display: none;">
+            <div style="float: left;">
+                VACATION POLICY
+            </div>
+        </div>
+        <br />
+
+        <!-- Username and current password fields -->
+        <div style="width: 80%; margin: auto;">
+            <!-- Username field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="annual-accrual-days"
+                       name="annual-accrual-days" type="number" step="0.01"
+                       value="{{ user.profile.annual_accrual_days }}" readonly
+                       onchange="setMaxAllowableAccrualDays(this)" />
+                <label class="mdc-text-field__label" for="annual-accrual-days">
+                    Annual Accrual Days*
+                </label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <!-- Current password field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="max-allowable-accrual-days"
+                       name="max-allowable-accrual-days" type="number" step="0.01"
+                       value="{{ user.profile.max_allowable_accrual_days }}" readonly />
+                <label class="mdc-text-field__label" for="max-allowable-accrual-days">
+                    Maximum Allowable Accrual Days*
+                </label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <!-- Profile UUID -->
+        <input id="profile-uuid" name="profile-uuid" type="hidden" value="{{ user.profile.uuid }}" />
+
+        <!-- Form action buttons -->
+        <div id="update-button-div"
+             style="width: 80%;
+                    margin: auto;
+                    margin-top: 125px;
+                    display: none;">
+            <!-- Update settings button -->
+            <button class="mdc-button mdc-button--raised" type="button"
+                    style="float: right;" onclick="updateUserSettings(this)" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>
+                    Update
+            </button>
+
+            <!-- User settings button -->
+            <a href="{% url 'user_settings' user.profile.uuid %}">
+                <button class="mdc-button" type="button"
+                        style="float: right;
+                                margin-right: 20px;"
+                        id="user-settings-button"
+                        data-mdc-auto-init="MDCRipple">
+                    <i class="fas fa-user"></i>&nbsp;&nbsp;
+                    Settings
+                </button>
+            </a>
+
+            <!-- Delete user button -->
+            <button class="mdc-button" type="button"
+                    style="float: right;
+                            margin-right: 20px;"
+                    id="delete-user-button" onclick="openDeleteUserModal(this)"
+                    data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">delete</i>
+                Delete
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,37 @@
+/* Overwrite default Google Material Design Components color schemes */
+:root {
+    --mdc-theme-primary: #158CAF;
+}
+
+/* Add pretty light gray background */
+body {
+    background: #FAFAFA;
+}
+
+/* Menu icon size */
+.mdc-toolbar__menu-icon {
+    font-size: 22px;
+}
+
+/* Remove box shadow on icon click */
+#menu-button:active,
+#menu-button:focus,
+#menu-button.active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+
+/* Custom CSS for Django messsages classes */
+.success {
+    color: #158CAF;
+}
+
+.warning {
+    color: #9F6000;
+}
+
+.error {
+    color: #CC0000;
+}

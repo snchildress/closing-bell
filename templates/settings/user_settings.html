@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="mdc-card" style="padding-top: 1px;
+                             padding-bottom: 50px;
+                             text-align: center;
+                             max-width: 750px;
+                             margin: auto;
+                             margin-top: 100px;">
+    <h2 class="mdc-typography--display3">
+        {% if new_user %}
+            Create New User
+        {% else %}
+            User Settings
+        {% endif %}
+    </h2>
+
+    <form method="POST" id="form" action="">
+    {% csrf_token %}
+        <div style="width: 80%; margin: auto;">
+            <div style="float: left;">
+                PROFILE
+            </div>
+        </div>
+        <br />
+
+        <!-- Name div divided into two columns -->
+        <div style="width: 80%; margin: auto;">
+            <!-- First name input field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="first-name" name="first-name" type="text" value="{{ first_name }}" />
+                <label class="mdc-text-field__label" for="first-name">First Name*</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <!-- Last name input field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="last-name" name="last-name" type="text" value="{{ last_name }}" />
+                <label class="mdc-text-field__label" for="last-name">Last Name*</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
+        <div style="width: 80%; margin: auto; margin-top: 115px;">
+            <div style="float: left;">
+                CREDENTIALS
+            </div>
+        </div>
+        <br />
+
+        <!-- Username and current password fields -->
+        <div style="width: 80%; margin: auto;">
+            <!-- Username field -->
+            <div class="mdc-text-field" style="float: left;
+                                               {% if own_settings or new_user %}
+                                                    width: 47.5%;
+                                               {% else %}
+                                                    width: 100%;
+                                               {% endif %}"
+                 data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="username" name="username" type="email" value="{{ username }}" />
+                <label class="mdc-text-field__label" for="username">Username / Email Address*</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            {% if own_settings or new_user %}
+                <!-- Current password field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="current-password" name="password" type="password" />
+                    <label class="mdc-text-field__label" for="current-password">
+                        {% if new_user %}
+                            Password*
+                        {% else %}
+                            Current Password*
+                        {% endif %}
+                    </label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if new_user %}
+            <!-- Vacation policy settings section -->
+            <div style="width: 80%; margin: auto; margin-top: 125px;">
+                <div style="float: left;">
+                    VACATION POLICY
+                </div>
+            </div>
+            <br />
+
+            <!-- Username and current password fields -->
+            <div style="width: 80%; margin: auto;">
+                <!-- Username field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="annual-accrual-days" name="annual-accrual-days" type="number" step="0.01" />
+                    <label class="mdc-text-field__label" for="annual-accrual-days">Annual Accrual Days*</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- Current password field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="max-allowable-accrual-days" name="max-allowable-accrual-days" type="number" step="0.01" />
+                    <label class="mdc-text-field__label" for="max-allowable-accrual-days">Maximum Allowable Accrual Days*</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+        {% else %}
+            <!-- New password div divided into two columns -->
+            <div style="width: 80%; margin: auto;">
+                <!-- New password field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="new-password" name="new-password" type="password" />
+                    <label class="mdc-text-field__label" for="new-password">New Password</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- New password confirmation field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="new-password-confirmation" type="password" />
+                    <label class="mdc-text-field__label" for="new-password-confirmation">New Password Confirmation</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Form action buttons -->
+        <div style="width: 80%;
+                    margin: auto;
+                    {% if new_user %}
+                        margin-top: 125px;">
+                    {% else %}
+                        margin-top: 190px;">
+                    {% endif %}
+
+            <!-- Messages to the user about action result(s) -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{{ message.tags }}" style="float: left;">
+                        {{ message }}
+                    </div>
+                    {% if not forloop.last %}
+                        <br />
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            <!-- Update settings button -->
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;" id="submit-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>
+                {% if new_user %}
+                    Create
+                {% else %}
+                    Update
+                {% endif %}
+            </button>
+
+            <!-- Reset settings values button -->
+            <button class="mdc-button" type="button"
+                    style="float: right;
+                           width: 110px;
+                           margin-right: 20px;"
+                    id="reset-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">refresh</i>
+                    Reset
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    {% if new_user %}
+        // Get the annual accrual days and max allowable accrual days elements
+        var annualAccrualDays = document.getElementById('annual-accrual-days');
+        var maxAllowableAccrualDays = document.getElementById('max-allowable-accrual-days');
+
+        // Set the max allowable accrual days to 1.5 times the annual accrual days on focus out
+        annualAccrualDays.addEventListener('focusout', function() {
+            var defaultMaxAllowableAccrualDays = 1.5 * annualAccrualDays.value;
+            defaultMaxAllowableAccrualDays = defaultMaxAllowableAccrualDays.toFixed(2);
+            maxAllowableAccrualDays.value = defaultMaxAllowableAccrualDays;
+            maxAllowableAccrualDays.focus();
+        });
+    {% endif %}
+
+
+    // Get submit button and form elements
+    var submitButton = document.getElementById('submit-button');
+    var form = document.getElementById('form');
+
+    // Submit form on submit button click
+    submitButton.addEventListener('click', function() {
+        validateSubmission(form);
+    });
+
+
+    // Get reset button
+    var resetButton = document.getElementById('reset-button');
+
+    // Refresh page on reset button click
+    resetButton.addEventListener('click', function() {
+        location.reload();
+    });
+
+
+    // Validate that all required form fields have values, then submit
+    function validateSubmission(form) {
+        var firstName = document.getElementById('first-name');
+        var lastName = document.getElementById('last-name');
+        var username = document.getElementById('username');
+        var password = document.getElementById('current-password');
+
+        // Get additional fields depending on page context
+        {% if new_user %}
+            var annualAccrualDays = document.getElementById('annual-accrual-days');
+            var maxAllowableAccrualDays = document.getElementById('max-allowable-accrual-days');
+        {% else %}
+            var newPassword = document.getElementById('new-password');
+            var newPasswordConfirmation = document.getElementById('new-password-confirmation');
+        {% endif %}
+
+        // Validate that required fields have values
+        if (!firstName.value) {
+            firstName.focus();
+        } else if (!lastName.value) {
+            lastName.focus();
+        } else if (!username.value) {
+            username.focus();
+        }
+            {% if own_settings or new_user %}
+                else if (!password.value) {
+                    password.focus();
+                }
+            {% endif %}
+        else if
+        {% if new_user %}
+            // Validate that new user fields have values
+            (!annualAccrualDays.value) {
+                annualAccrualDays.focus();
+            } else if (!maxAllowableAccrualDays.value) {
+                maxAllowableAccrualDays.focus();
+        {% else %}
+            // Validate that new passwords match for update settings page
+            (newPassword.value != newPasswordConfirmation.value) {
+                newPassword.focus();
+        {% endif %}
+        // If all required fields have values, submit the form
+        } else {
+            form.submit();
+        }
+    };
+</script>
+{% endblock %}

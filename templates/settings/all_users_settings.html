@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <!-- Loop to display each user's settings -->
+    <div style="margin-top: 100px;">
+        <!-- Messages to the user about action result(s) -->
+        {% if messages %}
+            <div style="padding-top: 1px;
+                        padding-bottom: 25px;
+                        text-align: center;
+                        max-width: 750px;
+                        margin: auto;
+                        margin-bottom: 15px;">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% if not forloop.last %}
+                        <br />
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% for user in users %}
+            {% include './partials/user_settings_partial.html' with user=user %}
+        {% endfor %}
+    </div>
+
+    <!-- Delete user dialog modal -->
+    <aside class="mdc-dialog" id="delete-user-modal" data-mdc-auto-init="MDCDialog">
+        <div class="mdc-dialog__surface" style="padding-left: 50px;
+                                                padding-right: 25px;
+                                                width: 250px;
+                                                margin: auto;">
+            <!-- Delete user title -->
+            <h5 class="mdc-typography--display1" id="delete-user-title" style="height: 15px;"></h5>
+
+            <!-- Delete user message -->
+            <div id="delete-user-message"></div>
+            <br />
+            <br />
+
+            <!-- Delete user action buttons -->
+            <footer class="mdc-dialog__footer">
+                <!-- Cancel button to close modal without action -->
+                <button type="button" class="mdc-button mdc-dialog__footer__button
+                                             mdc-dialog__footer__button--cancel">
+                    <i class="material-icons mdc-button__icon">undo</i>
+                    Cancel
+                </button>
+
+                <!-- Delete button to execute delete action -->
+                <a id="delete-user-url" href="">
+                    <button type="button" class="mdc-button mdc-dialog__footer__button
+                                                mdc-button--raised mdc-dialog__footer__button--accept
+                                                mdc-dialog__action">
+                        <i class="material-icons mdc-button__icon">delete</i>
+                        Delete
+                    </button>
+                </a>
+            </footer>
+         </div>
+    </aside>
+
+    <!-- Floating button in bottom right corner to create new user -->
+    <a href="{% url 'new_user' %}">
+        <button class="mdc-fab material-icons"
+                aria-label="add"
+                data-mdc-auto-init="MDCRipple"
+                style="position: fixed;
+                        right: 25px;
+                        bottom: 25px;
+                        background: #158CAF;">
+            <span class="mdc-fab__icon">
+                add
+            </span>
+        </button>
+    </a>
+
+    <script>
+        // Toggle card expansion function
+        function toggleCardExpansion(e) {
+            // Get the given card and its toggle icon
+            var card = e.parentNode;
+            var toggleIcon = card.querySelector('#toggle-icon');
+
+            // Construct array of elements to expand or minimize
+            var expandableElements = [
+                card.querySelector('#card-title-minimized'),
+                card.querySelector('#card-title-expanded'),
+                card.querySelector('#profile-div'),
+                card.querySelector('#vacation-policy-div'),
+                card.querySelector('#update-button-div')
+            ]
+
+            // Toggle the visiblity of all expandable elements
+            for (i = 0; i < expandableElements.length; i++) {
+                toggleElementDisplay(expandableElements[i]);
+            }
+
+            // Toggle the expandable div icon
+            if (toggleIcon.innerHTML == 'expand_more') {
+                toggleIcon.innerHTML = 'expand_less';
+            } else {
+                toggleIcon.innerHTML = 'expand_more';
+            }
+
+            // Toggle read only attribute of editable fields
+            var annualAccrualDays = card.querySelector('#annual-accrual-days');
+            var maxAllowableAccrualDays = card.querySelector('#max-allowable-accrual-days');
+            annualAccrualDays.readOnly = !annualAccrualDays.readOnly;
+            maxAllowableAccrualDays.readOnly = !maxAllowableAccrualDays.readOnly;
+        };
+
+        function toggleElementDisplay(element) {
+            if (element.style.display == 'none') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        };
+
+
+        // Submit form to update a user's settings
+        function updateUserSettings(e) {
+            // Get form fields
+            var form = e.parentNode.parentNode;
+            var card = form.parentNode;
+            var firstName = card.querySelector('#first-name');
+            var lastName = card.querySelector('#last-name');
+            var annualAccrualDays = card.querySelector('#annual-accrual-days');
+            var maxAllowableAccrualDays = card.querySelector('#max-allowable-accrual-days');
+
+            // If any field is missing a value, focus on it
+            if (!firstName.value) {
+                firstName.focus();
+            } else if (!lastName.value) {
+                lastName.focus();
+            } else if (!annualAccrualDays.value) {
+                annualAccrualDays.focus();
+            } else if (!maxAllowableAccrualDays.value) {
+                maxAllowableAccrualDays.focus();
+            // Otherwise submit the form
+            } else {
+                form.submit();
+            }
+        };
+
+
+        // Open the delete user modal
+        function openDeleteUserModal(e) {
+            // Get the delete user modal and open it
+            var deleteUserModal = document.getElementById('delete-user-modal');
+            deleteUserModal.MDCDialog.show();
+
+            // Get user to delete's info
+            var form = e.parentNode.parentNode;
+            var profileUUID = form.querySelector('#profile-uuid').value;
+            var firstName = form.querySelector('#first-name').value;
+            var lastName = form.querySelector('#last-name').value;
+
+            // Create a string of the delete user URL using the request user's UUID
+            var deleteUserURL = "{% url 'delete_user' user.profile.uuid %}";
+
+            // Super hackily replace that UUID, the last 36 chars, with the correct UUID
+            deleteUserURL = deleteUserURL.slice(0, -36) + profileUUID;
+
+            // Use the correct URL for the delete user button
+            var deleteUserURLHref = document.getElementById('delete-user-url');
+            deleteUserURLHref.setAttribute('href', deleteUserURL);
+
+            // Use the selected user's name to message in the delete user modal
+            var deleteUserTitle = document.getElementById('delete-user-title');
+            var deleteUserMessage = document.getElementById('delete-user-message');
+            deleteUserTitle.innerHTML = 'Delete ' + firstName +'?';
+            deleteUserMessage.innerHTML = 'Are you sure you want to delete ' + firstName + ' ' + lastName + '? Deletions cannot be undone.';
+        };
+
+
+        // Use the annual accrual days to set the max allowable accrual days
+        function setMaxAllowableAccrualDays(e) {
+            var credsDiv = e.parentNode.parentNode;
+            // Get the annual accrual days and max allowable accrual days elements
+            var annualAccrualDays = credsDiv.querySelector('#annual-accrual-days');
+            var maxAllowableAccrualDays = credsDiv.querySelector('#max-allowable-accrual-days');
+
+            // Only set this value if the annual accrual days field is editable
+            if (!annualAccrualDays.readOnly) {
+                // Set the max allowable accrual days to 1.5 times the annual accrual days on focus out
+                var defaultMaxAllowableAccrualDays = 1.5 * annualAccrualDays.value;
+                defaultMaxAllowableAccrualDays = defaultMaxAllowableAccrualDays.toFixed(2);
+                maxAllowableAccrualDays.value = defaultMaxAllowableAccrualDays;
+                maxAllowableAccrualDays.focus();
+            }
+        };
+    </script>
+{% endblock %}
