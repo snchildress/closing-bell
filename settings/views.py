@@ -106,8 +106,15 @@ def create_new_user(request):
             annual_accrual_days = data['annual-accrual-days']
             max_allowable_accrual_days = data['max-allowable-accrual-days']
 
-            # Create User and Profile records
-            user = User.objects.create_user(username, username, password)
+            # Create new User record
+            try:
+                user = User.objects.create_user(username, username, password)
+            except Exception as e:
+                print(e)
+                messages.error(request, username + ' already exists!')
+                return redirect('new_user')
+
+            # Add additional User and Profile record data
             user.first_name = first_name
             user.last_name = last_name
             user.profile.annual_accrual_days = annual_accrual_days
