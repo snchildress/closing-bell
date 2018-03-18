@@ -33,6 +33,10 @@ def user_settings(request, uuid):
     if not request.user.is_staff:
         uuid = request.user.profile.uuid
 
+    # Query all User and Profile fields for the given Profile UUID
+    user = User.objects.filter(profile__uuid=uuid) \
+        .select_related('profile')[0]
+
     if request.method == 'POST':
         try:
             # Get form field submissions
@@ -43,7 +47,7 @@ def user_settings(request, uuid):
             password = data['password']
             new_password = data['new-password']
 
-            user = authenticate(request, username=username,
+            user = authenticate(request, username=user.username,
                                 password=password)
             if user:
                 # Update the user's session and authenticate again
@@ -55,11 +59,15 @@ def user_settings(request, uuid):
                 # Use the new user settings to update the database record
                 if user.first_name != first_name \
                         or user.last_name != last_name \
-                        or user.username != user.username:
-                    user.first_name = first_name
-                    user.last_name = last_name
-                    user.username = username
-                    messages.success(request, 'Name successfully updated.')
+                        or user.username != username:
+                    if user.username != username:
+                        user.username = username
+                        user.email = username
+                        messages.success(request, 'Username successfully updated.')
+                    if user.first_name != first_name or user.last_name != last_name:
+                        user.first_name = first_name
+                        user.last_name = last_name
+                        messages.success(request, 'Name successfully updated.')
                 # Otherwise message that no updates were requested
                 elif not new_password:
                     messages.warning(request, 'You didn\'t request any updates.')
@@ -71,14 +79,11 @@ def user_settings(request, uuid):
             print(e)
             messages.error(request, 'Oops! Something went wrong.')
 
-    context = {}
-    # Query all User and Profile fields for the given Profile UUID
-    user = User.objects.filter(profile__uuid=uuid) \
-        .select_related('profile')[0]
-    context['first_name'] = user.first_name
-    context['last_name'] = user.last_name
-    context['username'] = user.username
-
+    context = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'username': user.username
+    }
     return render(request, 'settings/user_settings.html', context)
 
 @user_passes_test(is_staff)
