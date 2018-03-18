@@ -52,7 +52,7 @@
         <div style="width: 80%; margin: auto;">
             <!-- Username field -->
             <div class="mdc-text-field" style="float: left;
-                                               {% if own_settings %}
+                                               {% if own_settings or new_user %}
                                                     width: 47.5%;
                                                {% else %}
                                                     width: 100%;
@@ -63,7 +63,7 @@
                 <div class="mdc-line-ripple"></div>
             </div>
 
-            {% if own_settings %}
+            {% if own_settings or new_user %}
                 <!-- Current password field -->
                 <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
                     <input class="mdc-text-field__input" id="current-password" name="password" type="password" />
@@ -227,7 +227,7 @@
         } else if (!username.value) {
             username.focus();
         }
-            {% if own_settings %}
+            {% if own_settings or new_user %}
                 else if (!password.value) {
                     password.focus();
                 }
