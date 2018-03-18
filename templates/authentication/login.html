@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!-- Outer login box div to center card vertically and horizontally -->
+<div class="login-box">
+    <!-- Login card -->
+    <div class="mdc-card" style="width: 500px;
+                                 padding-bottom: 50px;">
+        <!-- Login card parent div -->
+        <div style="width: 80%;
+                    text-align: center;
+                    margin: auto;">
+
+            <!-- Login card title -->
+            <h2 class="mdc-typography--display3" style="height: 25px;">
+                Log In
+            </h2>
+
+            <!-- Login form -->
+            <form method="POST" id="form" action="">
+            {% csrf_token %}
+                <!-- Username field -->
+                <div class="mdc-text-field" style="width: 100%;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="username" name="username" type="email" value="{{ username }}" />
+                    <label class="mdc-text-field__label" for="username">Username / Email Address*</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- Password field -->
+                <div class="mdc-text-field" style="width: 100%;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="password" name="password" type="password" />
+                    <label class="mdc-text-field__label" for="password">Password*</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <!-- Messages to the user about invalid credentials -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{{ message.tags }}" style="margin-top: 40px;
+                                                               margin-bottom: 40px;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Login button -->
+                <div style="margin-top: 45px;">
+                    <button class="mdc-button mdc-button--raised" type="button" style="width: 100%;"
+                            id="login-button" data-mdc-auto-init="MDCRipple">
+                        <i class="material-icons mdc-button__icon">person</i>Log In
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get form elements
+    var loginButton = document.getElementById('login-button');
+    var form = document.getElementById('form');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+
+    // Focus on first blank input field on page load
+    {% if username %}
+        password.focus();
+    {% else %}
+        username.focus();
+    {% endif %}
+
+    // Validate that the form contains a username and password and submit
+    loginButton.addEventListener('click', function() {
+        validateForm();
+    });
+
+    // Click the submit button when a user clicks the Enter key
+    document.addEventListener("keyup", function(event) {
+        // 13 is the Enter key
+        if (event.keyCode == 13) {
+            // Click the login button
+            loginButton.click();
+        }
+    });
+
+    function validateForm() {
+        // Ensure the username and password fields contain values, else focus on them
+        if (!username.value) {
+            username.focus();
+        } else if (!password.value) {
+            password.focus();
+        // If username and password have values, submit the form
+        } else {
+            form.submit();
+        }
+    };
+</script>
+{% endblock %}

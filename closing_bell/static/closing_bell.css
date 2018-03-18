@@ -3,6 +3,11 @@
     --mdc-theme-primary: #158CAF;
 }
 
+/* Allows for children to be vertically centered */
+html, body {
+    height: 97.5%;
+}
+
 /* Add pretty light gray background */
 body {
     background: #FAFAFA;
@@ -21,6 +26,14 @@ body {
     outline: 0;
     -webkit-box-shadow: none;
             box-shadow: none;
+}
+
+/* Centers the login box vertically and horizontally */
+.login-box {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Custom CSS for Django messsages classes */

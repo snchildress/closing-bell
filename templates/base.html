@@ -23,55 +23,60 @@
     </head>
 
     <body class="mdc-typography">
-        <!-- Navigation toolbar -->
-        <header class="mdc-toolbar mdc-toolbar--fixed">
-            <div class="mdc-toolbar__row">
-                <!-- Home button -->
-                <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                    <i class="fas fa-home mdc-toolbar__menu-icon"></i>
-                    {% if user.is_staff %}
-                        <a href="{% url 'all_users_settings' %}"
-                           style="color: inherit;">
-                            <i class="fas fa-users mdc-toolbar__menu-icon"></i>
-                        </a>
-                    {% endif %}
-                </section>
-
-                <!-- Centered title -->
-                <section class="mdc-toolbar__section">
-                    <span class="mdc-toolbar__title"><i class="fas fa-bell"></i>&nbsp;&nbsp;Closing Bell</span>
-                </section>
-
-                <!-- Toolbar navigation -->
-                <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-menu-anchor">
-                    <button class="mdc-toolbar__menu-icon" id="menu-button">
-                        <i class="fas fa-user"></i>
-                    </button>
-                    <div style="margin: 45px 20px 0 0;" class="mdc-menu" tabindex="-1" data-mdc-auto-init="MDCMenu" dir="rtl">
-                        <ul class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
-                            <li class="mdc-list-item" role="menuitem" tabindex="-1" aria-disabled="true">
-                                {{ user.get_full_name }}
-                            </li>
-                            <li class="mdc-list-divider" role="separator"></li>
-                            <a href="{% url 'user_settings' request.user.profile.uuid %}" style="text-decoration: none;
-                                                                                                 color: inherit;">
-                                <li class="mdc-list-item" role="menuitem" tabindex="0">
-                                    Settings
-                                </li>
+        {% if user.is_authenticated %}
+            <!-- Navigation toolbar -->
+            <header class="mdc-toolbar mdc-toolbar--fixed">
+                <div class="mdc-toolbar__row">
+                    <!-- Home button -->
+                    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                        <i class="fas fa-home mdc-toolbar__menu-icon"></i>
+                        {% if user.is_staff %}
+                            <a href="{% url 'all_users_settings' %}"
+                            style="color: inherit;">
+                                <i class="fas fa-users mdc-toolbar__menu-icon"></i>
                             </a>
-                            <a href="{% url 'logout' %}" style="text-decoration: none; color: inherit;">
-                                <li class="mdc-list-item" role="menuitem" tabindex="0">
-                                    Logout
-                                </li>
-                            </a>
-                        </ul>
-                    </div>
-                </section>
-            </div>
-        </header>
+                        {% endif %}
+                    </section>
 
-        <!-- Body content with top margin to adjust for toolbar -->
-        <div class="mdc-toolbar-fixed-adjust">
+                    <!-- Centered title -->
+                    <section class="mdc-toolbar__section">
+                        <span class="mdc-toolbar__title"><i class="fas fa-bell"></i>&nbsp;&nbsp;Closing Bell</span>
+                    </section>
+
+                    <!-- Toolbar navigation -->
+                    <section class="mdc-toolbar__section mdc-toolbar__section--align-end mdc-menu-anchor">
+                        <button class="mdc-toolbar__menu-icon" id="menu-button">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div style="margin: 45px 20px 0 0;" class="mdc-menu" tabindex="-1" data-mdc-auto-init="MDCMenu" dir="rtl">
+                            <ul class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
+                                <li class="mdc-list-item" role="menuitem" tabindex="-1" aria-disabled="true">
+                                    {{ user.get_full_name }}
+                                </li>
+                                <li class="mdc-list-divider" role="separator"></li>
+                                <a href="{% url 'user_settings' request.user.profile.uuid %}" style="text-decoration: none;
+                                                                                                    color: inherit;">
+                                    <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                        Settings
+                                    </li>
+                                </a>
+                                <a href="{% url 'logout' %}" style="text-decoration: none; color: inherit;">
+                                    <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                        Logout
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </header>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <div class="mdc-toolbar-fixed-adjust">
+        {% else %}
+            <div style="height: 100%;">
+        {% endif %}
             {% block body %}
             {% endblock %}
         </div>
@@ -80,22 +85,24 @@
         <script src="https://unpkg.com/material-components-web@0.31.0/dist/material-components-web.min.js"></script>
         <script>window.mdc.autoInit();</script>
 
-        <!-- Script for toggling the user menu open and closed -->
-        <script>
-            // Get the menu button and menu elements
-            var menuButton = document.getElementById('menu-button');
-            var menu = document.querySelector('.mdc-menu');
+        {% if user.is_authenticated %}
+            <!-- Script for toggling the user menu open and closed -->
+            <script>
+                // Get the menu button and menu elements
+                var menuButton = document.getElementById('menu-button');
+                var menu = document.querySelector('.mdc-menu');
 
-            // Toggle the open state of the menu on menu button click
-            menuButton.addEventListener('click', function() {
-                menu.MDCMenu.open = !menu.MDCMenu.open;
-            });
+                // Toggle the open state of the menu on menu button click
+                menuButton.addEventListener('click', function() {
+                    menu.MDCMenu.open = !menu.MDCMenu.open;
+                });
 
-            // Close the menu if a user clicks outside the opened menu or hits Esc
-            document.addEventListener('MDCMenu:cancel', function() {
-                menu.MDCMenu.open = false;
-            });
-        </script>
+                // Close the menu if a user clicks outside the opened menu or hits Esc
+                document.addEventListener('MDCMenu:cancel', function() {
+                    menu.MDCMenu.open = false;
+                });
+            </script>
+        {% endif %}
     </body>
 
 </html>
