@@ -8,6 +8,7 @@ import importlib
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login', views.login_auth, name='login'),
     path('logout', views.logout_auth, name='logout'),
 ]
 
