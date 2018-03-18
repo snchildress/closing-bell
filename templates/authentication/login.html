@@ -33,6 +33,17 @@
                     <div class="mdc-line-ripple"></div>
                 </div>
 
+
+                <!-- Messages to the user about invalid credentials -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{{ message.tags }}" style="margin-top: 40px;
+                                                               margin-bottom: 40px;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
                 <!-- Login button -->
                 <div style="margin-top: 45px;">
                     <button class="mdc-button mdc-button--raised" type="button" style="width: 100%;"
