@@ -1,6 +1,6 @@
 from settings.models import Profile
 
-from datetime import date
+from datetime import date, datetime
 
 
 # Internal helper functions
@@ -29,3 +29,20 @@ def accrue_days():
             profile.remaining_accrual_days = max_allowable_accrual_days
 
         profile.save()
+
+def reduce_days(profile, start_date, end_date):
+    """
+    Reduces a user's remaining accrual balance by the number of
+    vacation days requested
+    """
+    # Convert dates to datetime formats
+    start_date = datetime.strptime(start_date, '%Y-%m-%dT00:00:00.000Z')
+    end_date = datetime.strptime(end_date, '%Y-%m-%dT00:00:00.000Z')
+
+    # Get difference between dates in days
+    number_of_days_requested = end_date - start_date
+    number_of_days_requested = number_of_days_requested.days
+
+    # Reduce the user's remaining accrual days by the number of days requested
+    profile.remaining_accrual_days -= number_of_days_requested
+    profile.save()
