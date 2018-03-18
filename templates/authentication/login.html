@@ -45,4 +45,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Get form elements
+    var loginButton = document.getElementById('login-button');
+    var form = document.getElementById('form');
+
+    // Validate that the form contains a username and password and submit
+    loginButton.addEventListener('click', function() {
+        form.submit();
+    });
+</script>
 {% endblock %}
