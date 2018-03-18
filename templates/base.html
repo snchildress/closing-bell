@@ -72,12 +72,11 @@
             </header>
         {% endif %}
 
-        <div
-            {% if user.is_authenticated %}
-                <!-- Body content with top margin to adjust for toolbar -->
-                class="mdc-toolbar-fixed-adjust"
-            {% endif %}
-            >
+        {% if user.is_authenticated %}
+            <div class="mdc-toolbar-fixed-adjust">
+        {% else %}
+            <div style="height: 100%;">
+        {% endif %}
             {% block body %}
             {% endblock %}
         </div>
