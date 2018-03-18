@@ -51,26 +51,32 @@
         <!-- Username and current password fields -->
         <div style="width: 80%; margin: auto;">
             <!-- Username field -->
-            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+            <div class="mdc-text-field" style="float: left;
+                                               {% if own_settings %}
+                                                    width: 47.5%;
+                                               {% else %}
+                                                    width: 100%;
+                                               {% endif %}"
+                 data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="username" name="username" type="email" value="{{ username }}" />
                 <label class="mdc-text-field__label" for="username">Username / Email Address*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
-            <!-- Current password field -->
-            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
-                <input class="mdc-text-field__input" id="current-password" name="password" type="password" />
-                <label class="mdc-text-field__label" for="current-password">
-                    {% if new_user %}
-                        Password*
-                    {% elif own_settings %}
-                        Current Password*
-                    {% else %}
-                        Current Password
-                    {% endif %}
-                </label>
-                <div class="mdc-line-ripple"></div>
-            </div>
+            {% if own_settings %}
+                <!-- Current password field -->
+                <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                    <input class="mdc-text-field__input" id="current-password" name="password" type="password" />
+                    <label class="mdc-text-field__label" for="current-password">
+                        {% if new_user %}
+                            Password*
+                        {% else %}
+                            Current Password*
+                        {% endif %}
+                    </label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+            {% endif %}
         </div>
 
         {% if new_user %}
