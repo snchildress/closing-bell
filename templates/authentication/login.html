@@ -75,6 +75,15 @@
         validateForm();
     });
 
+    // Click the submit button when a user clicks the Enter key
+    document.addEventListener("keyup", function(event) {
+        // 13 is the Enter key
+        if (event.keyCode == 13) {
+            // Click the login button
+            loginButton.click();
+        }
+    });
+
     function validateForm() {
         // Ensure the username and password fields contain values, else focus on them
         if (!username.value) {
