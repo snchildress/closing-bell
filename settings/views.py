@@ -35,15 +35,17 @@ def user_settings(request, uuid):
             first_name = data['first-name']
             last_name = data['last-name']
             username = data['username']
-            password = data['new-password']
+            password = data['password']
+            new_password = data['new-password']
 
             user = authenticate(request, username=username,
                                 password=password)
             if user is not None:
                 # Update the user's session and authenticate again
-                user.set_password(password)
-                update_session_auth_hash(request, user)
-                login(request, user)
+                if new_password:
+                    user.set_password(new_password)
+                    update_session_auth_hash(request, user)
+                    login(request, user)
                 # Use the new user settings to update the database record
                 user.first_name = first_name
                 user.last_name = last_name
