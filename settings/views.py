@@ -168,9 +168,14 @@ def delete_user(request, uuid):
     """
     try:
         user = User.objects.get(profile__uuid=uuid)
+        first_name = user.first_name
+        last_name = user.last_name
         user.delete()
+        messages.success(request, first_name + ' ' + last_name + ' was \
+            successfully deleted.')
 
     except Exception as e:
         print(e)
+        messages.error(request, 'There was an issue deleting that user.')
 
     return redirect('all_users_settings')
