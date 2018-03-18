@@ -29,6 +29,10 @@ def user_settings(request, uuid):
     """
     Displays or edits a user's settings
     """
+    # Non-staff users can only access their own settings
+    if not request.user.is_staff:
+        uuid = request.user.profile.uuid
+
     if request.method == 'POST':
         try:
             # Get form field submissions
@@ -66,22 +70,14 @@ def user_settings(request, uuid):
         except Exception as e:
             print(e)
             messages.error(request, 'Oops! Something went wrong.')
-            pass
 
     context = {}
-    # If the user is requesting his/her own user settings page
-    if request.user.profile.uuid == uuid:
-        context['first_name'] = request.user.first_name
-        context['last_name'] = request.user.last_name
-        context['username'] = request.user.username
-    # Must be a staff user to access someone else's settings page\
-    elif request.user.is_staff:
-        # Query all User and Profile fields for the given Profile UUID
-        user = User.objects.filter(profile__uuid=uuid) \
-            .select_related('profile')[0]
-        context['first_name'] = user.first_name
-        context['last_name'] = user.last_name
-        context['username'] = user.username
+    # Query all User and Profile fields for the given Profile UUID
+    user = User.objects.filter(profile__uuid=uuid) \
+        .select_related('profile')[0]
+    context['first_name'] = user.first_name
+    context['last_name'] = user.last_name
+    context['username'] = user.username
 
     return render(request, 'settings/user_settings.html', context)
 
@@ -159,7 +155,6 @@ def all_users_settings(request):
             print(e)
             messages.error(request, 'Oops! There was an issue updating ' \
                 + first_name + '\'s settings.')
-            pass
 
     # Query all User and Profile records
     users = User.objects.all().select_related('profile')
@@ -177,6 +172,5 @@ def delete_user(request, uuid):
 
     except Exception as e:
         print(e)
-        pass
 
     return redirect('all_users_settings')
