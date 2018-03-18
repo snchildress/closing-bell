@@ -47,8 +47,10 @@ def user_settings(request, uuid):
             password = data['password']
             new_password = data['new-password']
 
+            # Verify the user's password to allow for user record changes
             user = authenticate(request, username=user.username,
                                 password=password)
+
             if user:
                 # Update the user's session and authenticate again
                 if new_password:
@@ -60,14 +62,18 @@ def user_settings(request, uuid):
                 if user.first_name != first_name \
                         or user.last_name != last_name \
                         or user.username != username:
+                    # If there's a new username, update it
                     if user.username != username:
                         user.username = username
                         user.email = username
                         messages.success(request, 'Username successfully updated.')
+
+                    # If there's a new first or last name, update it
                     if user.first_name != first_name or user.last_name != last_name:
                         user.first_name = first_name
                         user.last_name = last_name
                         messages.success(request, 'Name successfully updated.')
+
                 # Otherwise message that no updates were requested
                 elif not new_password:
                     messages.warning(request, 'You didn\'t request any updates.')
