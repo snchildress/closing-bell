@@ -85,22 +85,24 @@
         <script src="https://unpkg.com/material-components-web@0.31.0/dist/material-components-web.min.js"></script>
         <script>window.mdc.autoInit();</script>
 
-        <!-- Script for toggling the user menu open and closed -->
-        <script>
-            // Get the menu button and menu elements
-            var menuButton = document.getElementById('menu-button');
-            var menu = document.querySelector('.mdc-menu');
+        {% if user.is_authenticated %}
+            <!-- Script for toggling the user menu open and closed -->
+            <script>
+                // Get the menu button and menu elements
+                var menuButton = document.getElementById('menu-button');
+                var menu = document.querySelector('.mdc-menu');
 
-            // Toggle the open state of the menu on menu button click
-            menuButton.addEventListener('click', function() {
-                menu.MDCMenu.open = !menu.MDCMenu.open;
-            });
+                // Toggle the open state of the menu on menu button click
+                menuButton.addEventListener('click', function() {
+                    menu.MDCMenu.open = !menu.MDCMenu.open;
+                });
 
-            // Close the menu if a user clicks outside the opened menu or hits Esc
-            document.addEventListener('MDCMenu:cancel', function() {
-                menu.MDCMenu.open = false;
-            });
-        </script>
+                // Close the menu if a user clicks outside the opened menu or hits Esc
+                document.addEventListener('MDCMenu:cancel', function() {
+                    menu.MDCMenu.open = false;
+                });
+            </script>
+        {% endif %}
     </body>
 
 </html>
