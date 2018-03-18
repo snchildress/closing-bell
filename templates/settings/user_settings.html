@@ -63,8 +63,10 @@
                 <label class="mdc-text-field__label" for="current-password">
                     {% if new_user %}
                         Password*
-                    {% else %}
+                    {% elif own_settings %}
                         Current Password*
+                    {% else %}
+                        Current Password
                     {% endif %}
                 </label>
                 <div class="mdc-line-ripple"></div>
@@ -218,9 +220,13 @@
             lastName.focus();
         } else if (!username.value) {
             username.focus();
-        } else if (!password.value) {
-            password.focus();
-        } else if
+        }
+            {% if own_settings %}
+                else if (!password.value) {
+                    password.focus();
+                }
+            {% endif %}
+        else if
         {% if new_user %}
             // Validate that new user fields have values
             (!annualAccrualDays.value) {

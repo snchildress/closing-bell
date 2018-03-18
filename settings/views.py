@@ -51,12 +51,13 @@ def user_settings(request, uuid):
             password = data['password']
             new_password = data['new-password']
 
-            # Verify the user's password to allow for user record changes
-            user = authenticate(request, username=user.username,
-                                password=password)
+            # Verify the user's password to allow for user record changes if own settings
+            if own_settings:
+                user = authenticate(request, username=user.username,
+                                    password=password)
 
             # User must be authenticated or editing someone else's settings to edit
-            if user or not own_settings:
+            if user:
                 # Update the user's session and authenticate again
                 if new_password:
                     user.set_password(new_password)
