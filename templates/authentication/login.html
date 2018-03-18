@@ -50,10 +50,27 @@
     // Get form elements
     var loginButton = document.getElementById('login-button');
     var form = document.getElementById('form');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+
+    // Focus on the username field on page load
+    username.focus();
 
     // Validate that the form contains a username and password and submit
     loginButton.addEventListener('click', function() {
-        form.submit();
+        validateForm();
     });
+
+    function validateForm() {
+        // Ensure the username and password fields contain values, else focus on them
+        if (!username.value) {
+            username.focus();
+        } else if (!password.value) {
+            password.focus();
+        // If username and password have values, submit the form
+        } else {
+            form.submit();
+        }
+    };
 </script>
 {% endblock %}
