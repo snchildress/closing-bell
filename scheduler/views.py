@@ -21,8 +21,25 @@ def request_vacation(request):
         profile = request.user.profile
         success = reduce_days(profile, start_date, end_date)
         if success:
-            messages.success(request, 'Your vacation request for ' + \
-                start_date + ' to ' + end_date + ' was successfully submitted!')
+            # Get clean formats for the month, day, and year
+            start_date_year = start_date[0:4]
+            start_date_month = start_date[5:7]
+            start_date_day = start_date[8:10]
+            end_date_year = end_date[0:4]
+            end_date_month = end_date[5:7]
+            end_date_day = end_date[8:10]
+            # If only one day was requested, message success for that day
+            if start_date == end_date:
+                messages.success(request, 'Your vacation request for ' + \
+                    start_date_month + '/' + start_date_day + '/' + \
+                start_date_year + ' was successfully submitted!')
+            # Otherwise message success for both dates provided
+            else:
+                messages.success(request, 'Your vacation request for ' + \
+                    start_date_month + '/' + start_date_day + '/' + \
+                    start_date_year + ' to ' + end_date_month + '/' + \
+                    end_date_day + '/' + end_date_year + ' was \
+                    successfully submitted!')
         else:
             messages.error(request, 'Oops! There was an issue processing \
                 your request.')
