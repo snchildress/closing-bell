@@ -14,6 +14,9 @@ def request_vacation(request):
     Renders a page to request vacation time and displays
     previous and future requests
     """
+    # Accrue monthly days for each user who hasn't yet accrued this month
+    accrue_days()
+
     if request.method == 'POST':
         data = request.POST
         start_date = data['start-date']
