@@ -13,7 +13,6 @@ from django.contrib.auth.decorators import (
 from django.contrib import messages
 
 from settings.models import Profile
-from scheduler.views import accrue_days
 
 
 # Internal helper
@@ -153,9 +152,6 @@ def all_users_settings(request):
     """
     Displays and allows for edits to all users in the system
     """
-    # Accrue monthly days for each user who hasn't yet accrued this month
-    accrue_days()
-
     if request.method == 'POST':
         try:
             data = request.POST

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 
 from settings.models import Profile
+from scheduler.models import Request
 
 from datetime import date, datetime
 
@@ -14,25 +15,42 @@ def request_vacation(request):
     Renders a page to request vacation time and displays
     previous and future requests
     """
+    # Accrue monthly days for each user who hasn't yet accrued this month
+    accrue_days()
+
     if request.method == 'POST':
-        data = request.POST
-        start_date = data['start-date']
-        end_date = data['end-date']
-        profile = request.user.profile
-        success = reduce_days(profile, start_date, end_date)
-        if success:
-            # Get clean formats for the month, day, and year
+        try:
+            # Get request dates and convert to ISO format
+            data = request.POST
+            start_date = data['start-date'] + 'T00:00:00.000Z'
+            end_date = data['end-date'] + 'T00:00:00.000Z'
+
+            # Create a Request record with the given dates
+            request_record = Request.objects.create(
+                user=request.user,
+                start_date=start_date,
+                end_date=end_date
+            )
+
+            # Reduce the User's remaining balance by the requested amount
+            profile = request.user.profile
+            profile.remaining_accrual_days -= request_record.number_of_days
+            profile.save()
+
+            # Get clean formats for the month, day, and year of request dates
             start_date_year = start_date[0:4]
             start_date_month = start_date[5:7]
             start_date_day = start_date[8:10]
             end_date_year = end_date[0:4]
             end_date_month = end_date[5:7]
             end_date_day = end_date[8:10]
+
             # If only one day was requested, message success for that day
             if start_date == end_date:
                 messages.success(request, 'Your vacation request for ' + \
                     start_date_month + '/' + start_date_day + '/' + \
                 start_date_year + ' was successfully submitted!')
+
             # Otherwise message success for both dates provided
             else:
                 messages.success(request, 'Your vacation request for ' + \
@@ -40,11 +58,17 @@ def request_vacation(request):
                     start_date_year + ' to ' + end_date_month + '/' + \
                     end_date_day + '/' + end_date_year + ' was \
                     successfully submitted!')
-        else:
+        
+        # Otherwise message that an error occurred
+        except Exception as e:
+            print(e)
             messages.error(request, 'Oops! There was an issue processing \
                 your request.')
 
-    return render(request, 'scheduler/home.html')
+    request_records = Request.objects.filter(user=request.user)
+    context = {'request_records': request_records}
+
+    return render(request, 'scheduler/home.html', context)
 
 
 # Internal helper functions
@@ -73,26 +97,3 @@ def accrue_days():
             profile.remaining_accrual_days = max_allowable_accrual_days
 
         profile.save()
-
-def reduce_days(profile, start_date, end_date):
-    """
-    Reduces a user's remaining accrual balance by the number of
-    vacation days requested
-    """
-    try:
-        # Convert dates to datetime formats
-        start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        end_date = datetime.strptime(end_date, '%Y-%m-%d')
-
-        # Get difference between dates in days, adding 1 to include both dates
-        number_of_days_requested = end_date - start_date
-        number_of_days_requested = number_of_days_requested.days + 1
-
-        # Reduce the user's remaining accrual days by the number of days requested
-        profile.remaining_accrual_days -= number_of_days_requested
-        profile.save()
-        return True
-    
-    except Exception as e:
-        print(e)
-        return False

@@ -49,6 +49,27 @@ body {
     color: #CC0000;
 }
 
+/* Column layout CSS for scheduler */
+.column {
+    margin: auto;
+    margin-top: 75px;
+}
+
+/* Left column takes up 33% */
+.left {
+    position: absolute;
+    left: 5%;
+    right: 62%;
+}
+
+/* Right column takes up 67% */
+.right {
+    position: absolute;
+    left: 43%;
+    right: 5%;
+    text-align: center;
+}
+
 /* Date picker dropdown arrow color */
 input[type="date"]::-webkit-calendar-picker-indicator {
     color: #158CAF;
