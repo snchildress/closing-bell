@@ -38,7 +38,7 @@
 
             <!-- Request vacation button -->
             <button class="mdc-button mdc-button--raised" type="button" style="float: right;"
-                    id="submit-button" data-mdc-auto-init="MDCRipple">
+                    id="request-button" data-mdc-auto-init="MDCRipple">
                 <i class="material-icons mdc-button__icon">check</i>
                     Request
             </button>
@@ -55,4 +55,36 @@
         </div>
     </form>
 </div>
+
+<script>
+    // Get form elements
+    var form = document.getElementById('form');
+    var requestButton = document.getElementById('request-button');
+    var resetButton = document.getElementById('reset-button');
+    var startDate = document.getElementById('start-date');
+    var endDate = document.getElementById('end-date');
+
+    // Submit the form when a user clicks the request button
+    requestButton.addEventListener('click', function() {
+        submitForm();
+    });
+
+    // Refresh the page when a user clicks the reset button
+    resetButton.addEventListener('click', function() {
+        location.reload();
+    });
+
+    function submitForm() {
+        // Validate that the user specified a start and end date
+        if (!startDate.value) {
+            startDate.focus();
+        } else if (!endDate.value) {
+            endDate.focus();
+        // If start and end date are not null, submit the form
+        } else {
+            form.submit();
+        }
+    }
+
+</script>
 {% endblock %}
