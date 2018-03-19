@@ -10,7 +10,7 @@ def login_auth(request):
     """
     # Redirect authenticated users back to the user's settings page
     if request.user.is_authenticated:
-        return redirect('user_settings', request.user.profile.uuid)
+        return redirect('home')
 
     # If user is not submitting credentials, show login page
     if request.method != 'POST':
@@ -25,7 +25,7 @@ def login_auth(request):
     if user:
         login(request, user)
         # Redirect the user back to previously visited page
-        next_page = request.POST.get('next', 'all_users_settings')
+        next_page = request.POST.get('next', 'home')
         return redirect(next_page)
 
     # Message that invalid credentials were given
