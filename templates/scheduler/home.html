@@ -8,27 +8,50 @@
                              margin: auto;
                              margin-top: 100px;">
     <h2 class="mdc-typography--display3" style="height: 25px;">
-        Request Time Off
+        Request Vacation
     </h2>
 
     <form method="POST" id="form" action="">
     {% csrf_token %}
 
-        <!-- Name div divided into two columns -->
+        <!-- Vacation date field div -->
         <div style="width: 80%; margin: auto;">
-            <!-- First name input field -->
+            <!-- Start date input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="start-date" name="start-date" type="date" />
                 <label class="mdc-text-field__label" for="start-date">Start Date*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
-            <!-- Last name input field -->
+            <!-- End date input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="end-date" name="end-date" type="date" value="{{ last_name }}" />
                 <label class="mdc-text-field__label" for="end-date">End Date*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
+        </div>
+
+        <!-- Form action buttons -->
+        <div style="width: 80%;
+                    margin: auto;
+                    margin-top: 125px;">
+
+            <!-- Request vacation button -->
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;"
+                    id="submit-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>
+                    Request
+            </button>
+
+            <!-- Reset vacation values button -->
+            <button class="mdc-button" type="button"
+                    style="float: right;
+                        width: 125px;
+                        margin-right: 20px;"
+                    id="reset-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">restore</i>
+                    Reset
+            </button>
         </div>
     </form>
 </div>
