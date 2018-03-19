@@ -13,6 +13,13 @@ def request_vacation(request):
     Renders a page to request vacation time and displays
     previous and future requests
     """
+    if request.method == 'POST':
+        data = request.POST
+        start_date = data['start-date']
+        end_date = data['end-date']
+        profile = request.user.profile
+        reduce_days(profile, start_date, end_date)
+
     return render(request, 'scheduler/home.html')
 
 
@@ -49,8 +56,8 @@ def reduce_days(profile, start_date, end_date):
     vacation days requested
     """
     # Convert dates to datetime formats
-    start_date = datetime.strptime(start_date, '%Y-%m-%dT00:00:00.000Z')
-    end_date = datetime.strptime(end_date, '%Y-%m-%dT00:00:00.000Z')
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
     # Get difference between dates in days
     number_of_days_requested = end_date - start_date
