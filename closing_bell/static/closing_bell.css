@@ -48,3 +48,8 @@ body {
 .error {
     color: #CC0000;
 }
+
+/* Date picker dropdown arrow color */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #158CAF;
+}
