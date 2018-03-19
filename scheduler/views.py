@@ -59,9 +59,9 @@ def reduce_days(profile, start_date, end_date):
     start_date = datetime.strptime(start_date, '%Y-%m-%d')
     end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
-    # Get difference between dates in days
+    # Get difference between dates in days, adding 1 to include both dates in count
     number_of_days_requested = end_date - start_date
-    number_of_days_requested = number_of_days_requested.days
+    number_of_days_requested = number_of_days_requested.days + 1
 
     # Reduce the user's remaining accrual days by the number of days requested
     profile.remaining_accrual_days -= number_of_days_requested
