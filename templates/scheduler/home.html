@@ -12,7 +12,14 @@
             </h2>
 
             <div style="width: 80%; margin: auto; padding-top: 25px;">
-                {% lorem %}
+                {% if request_records %}
+                    {% for request_record in request_records %}
+                        {{ request_record.start_date }}
+                        {% if not forloop.last %}
+                            <br />
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

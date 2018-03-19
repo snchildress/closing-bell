@@ -65,7 +65,11 @@ def request_vacation(request):
             messages.error(request, 'Oops! There was an issue processing \
                 your request.')
 
-    return render(request, 'scheduler/home.html')
+    request_records = Request.objects.filter(user=request.user)
+    print(request_records)
+    context = {'request_records': request_records}
+
+    return render(request, 'scheduler/home.html', context)
 
 
 # Internal helper functions
