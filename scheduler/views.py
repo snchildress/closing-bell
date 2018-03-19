@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 
 from settings.models import Profile
+from scheduler.models import Request
 
 from datetime import date, datetime
 
@@ -19,10 +20,15 @@ def request_vacation(request):
 
     if request.method == 'POST':
         data = request.POST
-        start_date = data['start-date']
-        end_date = data['end-date']
+        start_date = data['start-date'] + 'T00:00:00.000Z'
+        end_date = data['end-date'] + 'T00:00:00.000Z'
         profile = request.user.profile
         success = reduce_days(profile, start_date, end_date)
+        request_record = Request.objects.create(
+            user=request.user,
+            start_date=start_date,
+            end_date=end_date
+        )
         if success:
             # Get clean formats for the month, day, and year
             start_date_year = start_date[0:4]
@@ -84,8 +90,8 @@ def reduce_days(profile, start_date, end_date):
     """
     try:
         # Convert dates to datetime formats
-        start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        start_date = datetime.strptime(start_date, '%Y-%m-%dT00:00:00.000Z')
+        end_date = datetime.strptime(end_date, '%Y-%m-%dT00:00:00.000Z')
 
         # Get difference between dates in days, adding 1 to include both dates
         number_of_days_requested = end_date - start_date

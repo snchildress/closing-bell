@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
+from datetime import datetime
+
 
 class Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -29,8 +31,8 @@ def number_of_days(sender, instance, **kwargs):
     number of days requested
     """
     # Get the record's start and end dates
-    start_date = instance.start_date
-    end_date = instance.end_date
+    start_date = datetime.strptime(instance.start_date, '%Y-%m-%dT00:00:00.000Z')
+    end_date = datetime.strptime(instance.end_date, '%Y-%m-%dT00:00:00.000Z')
 
     # Get difference between dates in days, adding 1 to include both dates
     number_of_days_requested = end_date - start_date
