@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.contrib import messages
 
 from settings.models import Profile
 
@@ -18,7 +19,13 @@ def request_vacation(request):
         start_date = data['start-date']
         end_date = data['end-date']
         profile = request.user.profile
-        reduce_days(profile, start_date, end_date)
+        success = reduce_days(profile, start_date, end_date)
+        if success:
+            messages.success(request, 'Your vacation request for ' + \
+                start_date + ' to ' + end_date + ' was successfully submitted!')
+        else:
+            messages.error(request, 'Oops! There was an issue processing \
+                your request.')
 
     return render(request, 'scheduler/home.html')
 
@@ -55,14 +62,20 @@ def reduce_days(profile, start_date, end_date):
     Reduces a user's remaining accrual balance by the number of
     vacation days requested
     """
-    # Convert dates to datetime formats
-    start_date = datetime.strptime(start_date, '%Y-%m-%d')
-    end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    try:
+        # Convert dates to datetime formats
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
-    # Get difference between dates in days, adding 1 to include both dates in count
-    number_of_days_requested = end_date - start_date
-    number_of_days_requested = number_of_days_requested.days + 1
+        # Get difference between dates in days, adding 1 to include both dates
+        number_of_days_requested = end_date - start_date
+        number_of_days_requested = number_of_days_requested.days + 1
 
-    # Reduce the user's remaining accrual days by the number of days requested
-    profile.remaining_accrual_days -= number_of_days_requested
-    profile.save()
+        # Reduce the user's remaining accrual days by the number of days requested
+        profile.remaining_accrual_days -= number_of_days_requested
+        profile.save()
+        return True
+    
+    except Exception as e:
+        print(e)
+        return False

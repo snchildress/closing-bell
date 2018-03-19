@@ -36,6 +36,17 @@
                     margin: auto;
                     margin-top: 125px;">
 
+            <!-- Messages request result to the user -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{{ message.tags }}" style="float: left;
+                                                           text-align: left;
+                                                           max-width: 50%;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             <!-- Request vacation button -->
             <button class="mdc-button mdc-button--raised" type="button" style="float: right;"
                     id="request-button" data-mdc-auto-init="MDCRipple">
