@@ -6,7 +6,7 @@
     <div class="column left">
 
         <!-- Historical requests card -->
-        <div class="mdc-card" style="padding-bottom: 50px;">
+        <div class="mdc-card mdc-elevation--z3" style="padding-bottom: 50px;">
             <h2 class="mdc-typography--display3" style="height: 25px; text-align: center;">
                 Requests
             </h2>
@@ -14,7 +14,10 @@
             <div style="width: 80%; margin: auto; padding-top: 25px;">
                 {% if request_records %}
                     {% for request_record in request_records %}
-                        {{ request_record.start_date }}
+                        <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
+                            <strong>{{ request_record.number_of_days|floatformat }} days</strong>
+                            {{ request_record.start_date|date }} - {{ request_record.end_date|date }}
+                        </div>
                         {% if not forloop.last %}
                             <br />
                         {% endif %}
@@ -28,8 +31,8 @@
     <div class="column right">
 
         <!-- Request vacation card -->
-        <div class="mdc-card" style="padding-bottom: 50px;
-                                     max-width: 750px;">
+        <div class="mdc-card mdc-elevation--z3" style="padding-bottom: 50px;
+                                                       max-width: 750px;">
             <h2 class="mdc-typography--display3" style="height: 25px;">
                 Request Vacation
             </h2>

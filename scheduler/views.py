@@ -66,7 +66,6 @@ def request_vacation(request):
                 your request.')
 
     request_records = Request.objects.filter(user=request.user)
-    print(request_records)
     context = {'request_records': request_records}
 
     return render(request, 'scheduler/home.html', context)
