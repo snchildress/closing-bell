@@ -19,22 +19,40 @@
             <!-- Start date input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="start-date" name="start-date" type="date" />
-                <label class="mdc-text-field__label" for="start-date">Start Date*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
 
             <!-- End date input field -->
             <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
                 <input class="mdc-text-field__input" id="end-date" name="end-date" type="date" value="{{ last_name }}" />
-                <label class="mdc-text-field__label" for="end-date">End Date*</label>
                 <div class="mdc-line-ripple"></div>
             </div>
+
+            <!-- Start date label -->
+            <div style="width: 47.5%; float: left;">
+                <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent"
+                   style="float: left;
+                          font-size: 14px;">
+                    Start Date*
+                </p>
+            </div>
+
+            <!-- End date label -->
+            <div style="width: 47.5%; float: right;">
+                <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent"
+                   style="float: left;
+                          font-size: 14px;">
+                    End Date*
+                </p>
+            </div>
+
+
         </div>
 
         <!-- Form action buttons -->
         <div style="width: 80%;
                     margin: auto;
-                    margin-top: 125px;">
+                    margin-top: 140px;">
 
             <!-- Messages request result to the user -->
             {% if messages %}
