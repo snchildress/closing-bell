@@ -33,6 +33,11 @@
                     <div class="mdc-line-ripple"></div>
                 </div>
 
+                {% if request.GET.next %}
+                    <!-- Hidden field for next URL path -->
+                    <input value="{{ request.GET.next }}" name="next" type="hidden" />
+                {% endif %}
+
                 <!-- Messages to the user about invalid credentials -->
                 {% if messages %}
                     {% for message in messages %}

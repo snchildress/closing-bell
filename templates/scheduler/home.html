@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="mdc-card" style="padding-top: 1px;
+                             padding-bottom: 50px;
+                             text-align: center;
+                             max-width: 750px;
+                             margin: auto;
+                             margin-top: 100px;">
+    <h2 class="mdc-typography--display3" style="height: 25px;">
+        Request Vacation
+    </h2>
+
+    <form method="POST" id="form" action="">
+    {% csrf_token %}
+
+        <!-- Vacation date field div -->
+        <div style="width: 80%; margin: auto;">
+            <!-- Start date input field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: left;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="start-date" name="start-date" placeholder="mm/dd/yyyy" type="date" />
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <!-- End date input field -->
+            <div class="mdc-text-field" style="width: 47.5%; float: right;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="end-date" name="end-date" placeholder="mm/dd/yyyy" type="date" />
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <!-- Start date label -->
+            <div id="start-date-label" style="width: 47.5%; float: left;">
+                <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent"
+                   style="float: left;
+                          font-size: 14px;">
+                    Start Date*
+                </p>
+            </div>
+
+            <!-- End date label -->
+            <div id="end-date-label" style="width: 47.5%; float: right;">
+                <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent"
+                   style="float: left;
+                          font-size: 14px;">
+                    End Date*
+                </p>
+            </div>
+
+
+        </div>
+
+        <!-- Form action buttons -->
+        <div style="width: 80%;
+                    margin: auto;
+                    margin-top: 140px;">
+
+            <!-- Messages request result to the user -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{{ message.tags }}" style="float: left;
+                                                           text-align: left;
+                                                           max-width: 50%;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Request vacation button -->
+            <button class="mdc-button mdc-button--raised" type="button" style="float: right;"
+                    id="request-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">check</i>
+                    Request
+            </button>
+
+            <!-- Reset vacation values button -->
+            <button class="mdc-button" type="button"
+                    style="float: right;
+                        width: 125px;
+                        margin-right: 20px;"
+                    id="reset-button" data-mdc-auto-init="MDCRipple">
+                <i class="material-icons mdc-button__icon">restore</i>
+                    Reset
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Get form elements
+    var form = document.getElementById('form');
+    var requestButton = document.getElementById('request-button');
+    var resetButton = document.getElementById('reset-button');
+    var startDate = document.getElementById('start-date');
+    var endDate = document.getElementById('end-date');
+
+    // Submit the form when a user clicks the request button
+    requestButton.addEventListener('click', function() {
+        submitForm();
+    });
+
+    // Refresh the page when a user clicks the reset button
+    resetButton.addEventListener('click', function() {
+        location.reload();
+    });
+
+    function submitForm() {
+        // Validate that the user specified a start and end date
+        if (!startDate.value) {
+            startDate.focus();
+        } else if (!endDate.value) {
+            endDate.focus();
+        // If start and end date are not null, submit the form
+        } else {
+            form.submit();
+        }
+    }
+
+    // Change focus color for date field labels on focus in or out
+    startDate.addEventListener('focus', function() {
+        focusColor('start-date', true);
+    });
+
+    endDate.addEventListener('focus', function() {
+        focusColor('end-date', true);
+    });
+
+    startDate.addEventListener('focusout', function() {
+        focusColor('start-date', false);
+    })
+
+    endDate.addEventListener('focusout', function() {
+        focusColor('end-date', false);
+    })
+
+    // Add color to field label on focus in and remove on focus out
+    function focusColor(field, focus) {
+        var label = document.getElementById(field + '-label');
+        if (focus) {
+            label.style.color = '#158CAF';
+        } else {
+            label.style.color = '';
+        }
+    };
+
+</script>
+{% endblock %}

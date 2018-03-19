@@ -91,3 +91,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'closing_bell/static')]
 for app in CUSTOM_APPS:
     INSTALLED_APPS.append(app)
     STATICFILES_DIRS.append(os.path.join(BASE_DIR, app + '/static'))
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'login'
