@@ -14,3 +14,8 @@ urlpatterns = [
 
 for app in settings.CUSTOM_APPS:
     urlpatterns.append(path(app + '/', include(importlib.import_module(app + '.urls'))))
+
+# Set the root path to the scheduler's request vacation page
+from scheduler.views import request_vacation
+
+urlpatterns.append(path('', request_vacation, name='home'))
