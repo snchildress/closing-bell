@@ -29,7 +29,7 @@
             </div>
 
             <!-- Start date label -->
-            <div style="width: 47.5%; float: left;">
+            <div id="start-date-label" style="width: 47.5%; float: left;">
                 <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent"
                    style="float: left;
                           font-size: 14px;">
@@ -38,7 +38,7 @@
             </div>
 
             <!-- End date label -->
-            <div style="width: 47.5%; float: right;">
+            <div id="end-date-label" style="width: 47.5%; float: right;">
                 <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent"
                    style="float: left;
                           font-size: 14px;">
@@ -114,6 +114,33 @@
             form.submit();
         }
     }
+
+    // Change focus color for date field labels on focus in or out
+    startDate.addEventListener('focus', function() {
+        focusColor('start-date', true);
+    });
+
+    endDate.addEventListener('focus', function() {
+        focusColor('end-date', true);
+    });
+
+    startDate.addEventListener('focusout', function() {
+        focusColor('start-date', false);
+    })
+
+    endDate.addEventListener('focusout', function() {
+        focusColor('end-date', false);
+    })
+
+    // Add color to field label on focus in and remove on focus out
+    function focusColor(field, focus) {
+        var label = document.getElementById(field + '-label');
+        if (focus) {
+            label.style.color = '#158CAF';
+        } else {
+            label.style.color = '';
+        }
+    };
 
 </script>
 {% endblock %}
