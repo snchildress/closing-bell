@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, pre_delete
 from django.dispatch import receiver
 
 from datetime import datetime
@@ -50,3 +50,13 @@ def decrease_remaining_accrual_days(sender, instance, created, **kwargs):
         profile = instance.user.profile
         profile.remaining_accrual_days -= instance.number_of_days
         profile.save()
+
+@receiver(pre_delete, sender=Request)
+def increase_remaining_accrual_days(sender, instance, **kwargs):
+    """
+    Increases a User's remaining accrual balance by the requested amount
+    of vacation days before deleting that Request record
+    """
+    profile = instance.user.profile
+    profile.remaining_accrual_days += instance.number_of_days
+    profile.save()
