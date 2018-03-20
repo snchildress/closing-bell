@@ -32,11 +32,6 @@ def request_vacation(request):
                 end_date=end_date
             )
 
-            # Reduce the User's remaining balance by the requested amount
-            profile = request.user.profile
-            profile.remaining_accrual_days -= request_record.number_of_days
-            profile.save()
-
             # Get clean formats for the month, day, and year of request dates
             start_date_year = start_date[0:4]
             start_date_month = start_date[5:7]
