@@ -65,9 +65,14 @@ def request_vacation(request):
     today = date.today()
     current_date = today.strftime('%Y-%m-%dT00:00:00.000Z')
 
+    # Get all of the user's requests
     requests = Request.objects.filter(user=request.user)
-    past_requests = requests.filter(end_date__lte=current_date)
-    future_requests = requests.filter(start_date__gt=current_date)
+    # Sort past requests in descending order
+    past_requests = requests.filter(end_date__lte=current_date)\
+        .order_by('-end_date')
+    # Sort future requests in ascending order
+    future_requests = requests.filter(start_date__gt=current_date)\
+        .order_by('start_date')
     context = {
         'past_requests': past_requests,
         'future_requests': future_requests,
