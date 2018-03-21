@@ -39,8 +39,8 @@
                                             {{ future_request.start_date|date }}
                                         {% endif %}
                                     </div>
-                                    <div style="right: 5%; top: 27.5%; position: absolute;">
-                                        <i class="material-icons mdc-button__icon">delete</i>
+                                    <div id="delete-icon-div">
+                                        <i id="delete-icon" class="material-icons">delete</i>
                                     </div>
                                 </div>
                                 {% if not forloop.last %}
