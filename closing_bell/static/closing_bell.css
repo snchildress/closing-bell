@@ -55,22 +55,100 @@ body {
     margin-top: 75px;
 }
 
-/* Left column takes up 33% */
-.left {
-    position: absolute;
-    left: 5%;
-    right: 62%;
+/* Use screen width to determine how to correctly position columns evenly */
+
+/* Desktop-sized screens */
+@media screen and (min-width: 1450px) {
+    /* Left column takes up 33% */
+    .left {
+        position: absolute;
+        left: 10%;
+        right: 57%;
+    }
+
+    /* Right column takes up 67% */
+    .right {
+        position: absolute;
+        left: 52%;
+        right: 7%;
+        text-align: center;
+    }
 }
 
-/* Right column takes up 67% */
-.right {
-    position: absolute;
-    left: 43%;
-    right: 5%;
-    text-align: center;
+/* Laptop-sized screens */
+@media screen and (min-width: 900px) and (max-width: 1450px) {
+    /* Left column takes up 33% */
+    .left {
+        position: absolute;
+        left: 5%;
+        right: 62%;
+    }
+
+    /* Right column takes up 67% */
+    .right {
+        position: absolute;
+        left: 43%;
+        right: 5%;
+        text-align: center;
+    }
+}
+
+/* Tablet-sized screens */
+@media screen and (min-width: 450px) and (max-width: 900px) {
+    /* Left column stacked on top */
+    .left {
+        width: 80%;
+    }
+
+    /* Right column stacked on bottom */
+    .right {
+        width: 80%;
+        text-align: center;
+    }
+}
+
+/* Smartphone-sized screens */
+@media screen and (max-width: 450px) {
+    /* Left column stacked on top */
+    .left {
+        width: 95%;
+    }
+
+    /* Right column stacked on bottom */
+    .right {
+        width: 95%;
+        text-align: center;
+    }
 }
 
 /* Date picker dropdown arrow color */
 input[type="date"]::-webkit-calendar-picker-indicator {
     color: #158CAF;
+}
+
+/* Hide delete icon until hovered over or clicked on using 0.15s transition */
+#delete-icon-div {
+    right: 5%; 
+    top: 27.5%;
+    position: absolute;
+    color: inherit;
+}
+
+#delete-icon {    
+    opacity: 0;   
+    -webkit-transition: 0.15s;
+    -moz-transition: 0.15s;
+    -o-transition: 0.15s;
+    -ms-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#delete-icon-div:hover #delete-icon {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+#delete-icon-div:active #delete-icon {
+    opacity: 0.75;
+    cursor: pointer;
 }

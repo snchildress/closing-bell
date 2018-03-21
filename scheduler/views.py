@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from settings.models import Profile
@@ -44,15 +44,15 @@ def request_vacation(request):
             if start_date == end_date:
                 messages.success(request, 'Your vacation request for ' + \
                     start_date_month + '/' + start_date_day + '/' + \
-                start_date_year + ' was successfully submitted!')
+                start_date_year + ' was successfully scheduled!')
 
             # Otherwise message success for both dates provided
             else:
                 messages.success(request, 'Your vacation request for ' + \
                     start_date_month + '/' + start_date_day + '/' + \
-                    start_date_year + ' to ' + end_date_month + '/' + \
+                    start_date_year + ' - ' + end_date_month + '/' + \
                     end_date_day + '/' + end_date_year + ' was \
-                    successfully submitted!')
+                    successfully scheduled!')
         
         # Otherwise message that an error occurred
         except Exception as e:
@@ -60,10 +60,71 @@ def request_vacation(request):
             messages.error(request, 'Oops! There was an issue processing \
                 your request.')
 
-    request_records = Request.objects.filter(user=request.user)
-    context = {'request_records': request_records}
+
+    # Get the current date in ISO format
+    today = date.today()
+    current_date = today.strftime('%Y-%m-%dT00:00:00.000Z')
+
+    # Get all of the user's requests
+    requests = Request.objects.filter(user=request.user)
+    # Sort past requests in descending order
+    past_requests = requests.filter(end_date__lte=current_date)\
+        .order_by('-end_date')
+    # Sort future requests in ascending order
+    future_requests = requests.filter(start_date__gt=current_date)\
+        .order_by('start_date')
+    context = {
+        'past_requests': past_requests,
+        'future_requests': future_requests,
+    }
 
     return render(request, 'scheduler/home.html', context)
+
+@login_required
+def delete_request(request, request_id):
+    """
+    Deletes the given request if the request belongs to the
+    requesting user
+    """
+    try:
+        # Query the request from the given request ID
+        request_to_delete = Request.objects.get(id=request_id)
+
+        # Do not allow non-staff users to delete other users' requests
+        if not request.user.is_staff and request_to_delete.user != request.user:
+            messages.error(request, 'You cannot delete requests belonging to \
+                other users!')
+            return redirect('home')
+
+        # Get the request start and end dates for clear messaging
+        start_date = str(request_to_delete.start_date)
+        end_date = str(request_to_delete.end_date)
+
+        # Get clean formats for the month, day, and year of request dates
+        start_date_year = start_date[0:4]
+        start_date_month = start_date[5:7]
+        start_date_day = start_date[8:10]
+        end_date_year = end_date[0:4]
+        end_date_month = end_date[5:7]
+        end_date_day = end_date[8:10]
+    
+        # Otherwise delete the request and message accordingly
+        request_to_delete.delete()
+        if start_date == end_date:
+            messages.success(request, 'Your request for ' + start_date_month \
+                + '/' + start_date_day + '/' + start_date_year + \
+                ' was successfully deleted!')
+        else:
+            messages.success(request, 'Your request for ' + start_date_month \
+                + '/' + start_date_day + '/' + start_date_year + ' - ' \
+                + end_date_month + '/' + end_date_day + '/' + end_date_year \
+                + ' was successfully deleted!')
+
+    except Exception as e:
+        print(e)
+        messages.error(request, 'It looks like that request no longer exists!')
+
+    return redirect('home')
 
 
 # Internal helper functions

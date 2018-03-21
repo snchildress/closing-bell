@@ -6,22 +6,86 @@
     <div class="column left">
 
         <!-- Historical requests card -->
-        <div class="mdc-card mdc-elevation--z3" style="padding-bottom: 50px;">
-            <h2 class="mdc-typography--display3" style="height: 25px; text-align: center;">
+        <div class="mdc-card mdc-elevation--z3" style="padding-bottom: 50px;
+                                                       margin-bottom: 75px;">
+            <h2 class="mdc-typography--display3" style="height: 25px;
+                                                        text-align: center;">
                 Requests
             </h2>
 
-            <div style="width: 80%; margin: auto; padding-top: 25px;">
-                {% if request_records %}
-                    {% for request_record in request_records %}
-                        <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
-                            <strong>{{ request_record.number_of_days|floatformat }} days</strong>
-                            {{ request_record.start_date|date }} - {{ request_record.end_date|date }}
+            <div style="width: 80%;
+                        margin: auto;
+                        padding-top: 25px;">
+                {% if future_requests or past_requests %}
+                    {% if future_requests %}
+                        <div>
+                            <div style="padding-bottom: 15px;">
+                                {% if future_requests|length > 1 %}
+                                    FUTURE REQUESTS
+                                {% else %}
+                                    FUTURE REQUEST
+                                {% endif %}
+                            </div>
+                            {% for future_request in future_requests %}
+                                <div class="mdc-card mdc-elevation--z1" style="padding: 10px; position: relative;">
+                                    <div style="float: left;">
+                                        {% if future_request.number_of_days > 1 %}
+                                            <strong>{{ future_request.number_of_days|floatformat }} days</strong>
+                                            <br />
+                                            {{ future_request.start_date|date }} - {{ future_request.end_date|date }}
+                                        {% else %}
+                                            <strong>{{ future_request.number_of_days|floatformat }} day</strong>
+                                            <br />
+                                            {{ future_request.start_date|date }}
+                                        {% endif %}
+                                    </div>
+                                    {% if future_request.number_of_days > 1 %}
+                                        <div id="delete-icon-div" onclick="openDeleteRequestModal({{ future_request.id }}, '{{ future_request.start_date|date }}', '{{ future_request.end_date|date }}')">
+                                    {% else %}
+                                        <div id="delete-icon-div" onclick="openDeleteRequestModal({{ future_request.id }}, '{{ future_request.start_date|date }}')"> 
+                                    {% endif %}
+                                            <i id="delete-icon" class="material-icons">delete</i>
+                                    </div>
+                                </div>
+                                {% if not forloop.last %}
+                                    <br />
+                                {% endif %}
+                            {% endfor %}
                         </div>
-                        {% if not forloop.last %}
-                            <br />
-                        {% endif %}
-                    {% endfor %}
+                    {% endif %}
+                
+                    {% if future_requests and past_requests %}
+                        <hr style="margin-top: 25px;
+                                   margin-bottom: 25px;">
+                    {% endif %}
+
+                    {% if past_requests %}
+                        <div>
+                            <div style="padding-bottom: 15px;">
+                                {% if past_requests|length > 1 %}
+                                    PAST REQUESTS
+                                {% else %}
+                                    PAST REQUEST
+                                {% endif %}
+                            </div>
+                            {% for past_request in past_requests %}
+                                <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
+                                    {% if past_request.number_of_days > 1 %}
+                                        <strong>{{ past_request.number_of_days|floatformat }} days</strong>
+                                        {{ past_request.start_date|date }} - {{ past_request.end_date|date }}
+                                    {% else %}
+                                        <strong>{{ past_request.number_of_days|floatformat }} day</strong>
+                                        {{ past_request.start_date|date }}
+                                    {% endif %}
+                                </div>
+                                {% if not forloop.last %}
+                                    <br />
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    It looks like you don't have any requests yet!
                 {% endif %}
             </div>
         </div>
@@ -109,6 +173,44 @@
             </form>
         </div>
     </div>
+
+    <!-- Delete request dialog modal -->
+    <aside class="mdc-dialog" id="delete-request-modal" data-mdc-auto-init="MDCDialog">
+        <div class="mdc-dialog__surface" style="padding-left: 50px;
+                                                padding-right: 25px;
+                                                width: 250px;
+                                                margin: auto;">
+            <!-- Delete request title -->
+            <h5 class="mdc-typography--display1" id="delete-request-title" style="height: 15px;">
+                Delete Request?
+            </h5>
+
+            <!-- Delete request message -->
+            <div id="delete-request-message"></div>
+            <br />
+            <br />
+
+            <!-- Delete request action buttons -->
+            <footer class="mdc-dialog__footer">
+                <!-- Cancel button to close modal without action -->
+                <button type="button" class="mdc-button mdc-dialog__footer__button
+                                                mdc-dialog__footer__button--cancel">
+                    <i class="material-icons mdc-button__icon">undo</i>
+                    Cancel
+                </button>
+
+                <!-- Delete button to execute delete action -->
+                <a id="delete-request-url" href="">
+                    <button type="button" class="mdc-button mdc-dialog__footer__button
+                                                mdc-button--raised mdc-dialog__footer__button--accept
+                                                mdc-dialog__action">
+                        <i class="material-icons mdc-button__icon">delete</i>
+                        Delete
+                    </button>
+                </a>
+            </footer>
+         </div>
+    </aside>
 </div>
 
 <script>
@@ -168,5 +270,32 @@
         }
     };
 
+    // Open the delete request modal
+    function openDeleteRequestModal(requestID, requestStartDate, requestEndDate=null) {
+        // Get the delete request modal and open it
+        var deleteRequestModal = document.getElementById('delete-request-modal');
+        deleteRequestModal.MDCDialog.show();
+        
+        // Get the delete request message and replace it
+        var deleteRequestMessage = document.getElementById('delete-request-message');
+
+        if (requestEndDate) {
+            deleteRequestMessage.innerHTML = 'Are you sure you want to delete your request from '
+                + requestStartDate + ' - ' + requestEndDate + '?';
+        } else {
+            deleteRequestMessage.innerHTML = 'Are you sure you want to delete your request for '
+                + requestStartDate + '?';
+        }
+
+        // Create a string of the delete request URL with an ID of 0
+        var deleteRequestURL = "{% url 'delete_request' 0 %}";
+
+        // Replace that ID with the actual request to delete's ID
+        deleteRequestURL = deleteRequestURL.slice(0, -1) + requestID;
+
+        // Use the correct URL for the delete request button
+        var deleteRequestURLHref = document.getElementById('delete-request-url');
+        deleteRequestURLHref.setAttribute('href', deleteRequestURL);
+    };
 </script>
 {% endblock %}
