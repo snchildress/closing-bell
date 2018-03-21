@@ -200,7 +200,7 @@
                 </button>
 
                 <!-- Delete button to execute delete action -->
-                <a id="delete-user-url" href="">
+                <a id="delete-request-url" href="">
                     <button type="button" class="mdc-button mdc-dialog__footer__button
                                                 mdc-button--raised mdc-dialog__footer__button--accept
                                                 mdc-dialog__action">
@@ -271,7 +271,7 @@
     };
 
     // Open the delete request modal
-    function openDeleteRequestModal(requestId, requestStartDate, requestEndDate=null) {
+    function openDeleteRequestModal(requestID, requestStartDate, requestEndDate=null) {
         // Get the delete request modal and open it
         var deleteRequestModal = document.getElementById('delete-request-modal');
         deleteRequestModal.MDCDialog.show();
@@ -286,6 +286,16 @@
             deleteRequestMessage.innerHTML = 'Are you sure you want to delete your request for '
                 + requestStartDate + '?';
         }
+
+        // Create a string of the delete request URL with an ID of 0
+        var deleteRequestURL = "{% url 'delete_request' 0 %}";
+
+        // Replace that ID with the actual request to delete's ID
+        deleteRequestURL = deleteRequestURL.slice(0, -1) + requestID;
+
+        // Use the correct URL for the delete request button
+        var deleteRequestURLHref = document.getElementById('delete-request-url');
+        deleteRequestURLHref.setAttribute('href', deleteRequestURL);
     };
 </script>
 {% endblock %}
