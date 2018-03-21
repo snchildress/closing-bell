@@ -6,12 +6,16 @@
     <div class="column left">
 
         <!-- Historical requests card -->
-        <div class="mdc-card mdc-elevation--z3" style="padding-bottom: 50px;">
-            <h2 class="mdc-typography--display3" style="height: 25px; text-align: center;">
+        <div class="mdc-card mdc-elevation--z3" style="padding-bottom: 50px;
+                                                       margin-bottom: 75px;">
+            <h2 class="mdc-typography--display3" style="height: 25px;
+                                                        text-align: center;">
                 Requests
             </h2>
 
-            <div style="width: 80%; margin: auto; padding-top: 25px;">
+            <div style="width: 80%;
+                        margin: auto;
+                        padding-top: 25px;">
                 {% if future_requests or past_requests %}
                     {% if future_requests %}
                         <div>
@@ -35,7 +39,8 @@
                     {% endif %}
                 
                     {% if future_requests and past_requests %}
-                        <hr style="margin-top: 25px; margin-bottom: 25px;">
+                        <hr style="margin-top: 25px;
+                                   margin-bottom: 25px;">
                     {% endif %}
 
                     {% if past_requests %}
