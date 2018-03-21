@@ -95,10 +95,30 @@ def delete_request(request, request_id):
             messages.error(request, 'You cannot delete requests belonging to \
                 other users!')
             return redirect('home')
+
+        # Get the request start and end dates for clear messaging
+        start_date = str(request_to_delete.start_date)
+        end_date = str(request_to_delete.end_date)
+
+        # Get clean formats for the month, day, and year of request dates
+        start_date_year = start_date[0:4]
+        start_date_month = start_date[5:7]
+        start_date_day = start_date[8:10]
+        end_date_year = end_date[0:4]
+        end_date_month = end_date[5:7]
+        end_date_day = end_date[8:10]
     
         # Otherwise delete the request and message accordingly
         request_to_delete.delete()
-        messages.success(request, 'Successfully deleted that request!')
+        if start_date == end_date:
+            messages.success(request, 'Your request for ' + start_date_month \
+                + '/' + start_date_day + '/' + start_date_year + \
+                ' was successfully deleted!')
+        else:
+            messages.success(request, 'Your request for ' + start_date_month \
+                + '/' + start_date_day + '/' + start_date_year + ' - ' \
+                + end_date_month + '/' + end_date_day + '/' + end_date_year \
+                + ' was successfully deleted!')
 
     except Exception as e:
         print(e)
