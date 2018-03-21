@@ -12,16 +12,50 @@
             </h2>
 
             <div style="width: 80%; margin: auto; padding-top: 25px;">
-                {% if request_records %}
-                    {% for request_record in request_records %}
-                        <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
-                            <strong>{{ request_record.number_of_days|floatformat }} days</strong>
-                            {{ request_record.start_date|date }} - {{ request_record.end_date|date }}
+                {% if future_requests %}
+                    <div>
+                        <div style="padding-bottom: 15px;">
+                            {% if future_requests|length > 1 %}
+                                FUTURE REQUESTS
+                            {% else %}
+                                FUTURE REQUEST
+                            {% endif %}
                         </div>
-                        {% if not forloop.last %}
-                            <br />
-                        {% endif %}
-                    {% endfor %}
+                        {% for future_request in future_requests %}
+                            <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
+                                <strong>{{ future_request.number_of_days|floatformat }} days</strong>
+                                {{ future_request.start_date|date }} - {{ future_request.end_date|date }}
+                            </div>
+                            {% if not forloop.last %}
+                                <br />
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            
+                {% if future_requests and past_requests %}
+                    <hr style="margin-top: 25px; margin-bottom: 25px;">
+                {% endif %}
+
+                {% if past_requests %}
+                    <div>
+                        <div style="padding-bottom: 15px;">
+                            {% if past_requests|length > 1 %}
+                                PAST REQUESTS
+                            {% else %}
+                                PAST REQUEST
+                            {% endif %}
+                        </div>
+                        {% for past_request in past_requests %}
+                            <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
+                                <strong>{{ past_request.number_of_days|floatformat }} days</strong>
+                                {{ past_request.start_date|date }} - {{ past_request.end_date|date }}
+                            </div>
+                            {% if not forloop.last %}
+                                <br />
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 {% endif %}
             </div>
         </div>

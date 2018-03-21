@@ -60,8 +60,18 @@ def request_vacation(request):
             messages.error(request, 'Oops! There was an issue processing \
                 your request.')
 
-    request_records = Request.objects.filter(user=request.user)
-    context = {'request_records': request_records}
+
+    # Get the current date in ISO format
+    today = date.today()
+    current_date = today.strftime('%Y-%m-%dT00:00:00.000Z')
+
+    requests = Request.objects.filter(user=request.user)
+    past_requests = requests.filter(end_date__lte=current_date)
+    future_requests = requests.filter(start_date__gt=current_date)
+    context = {
+        'past_requests': past_requests,
+        'future_requests': future_requests,
+    }
 
     return render(request, 'scheduler/home.html', context)
 
