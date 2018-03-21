@@ -39,7 +39,7 @@
                                             {{ future_request.start_date|date }}
                                         {% endif %}
                                     </div>
-                                    <div id="delete-icon-div" onclick="openDeleteUserModal()">
+                                    <div id="delete-icon-div" onclick="openDeleteRequestModal({{ future_request.id }}, '{{ future_request.start_date|date }}', '{{ future_request.end_date|date }}')">
                                         <i id="delete-icon" class="material-icons">delete</i>
                                     </div>
                                 </div>
@@ -182,9 +182,7 @@
             </h5>
 
             <!-- Delete request message -->
-            <div id="delete-request-message">
-                Are you sure you want to delete your request?
-            </div>
+            <div id="delete-request-message"></div>
             <br />
             <br />
 
@@ -268,11 +266,15 @@
         }
     };
 
-    // Open the delete user modal
-    function openDeleteUserModal() {
-        // Get the delete user modal and open it
-        var deleteUserModal = document.getElementById('delete-request-modal');
-        deleteUserModal.MDCDialog.show();
+    // Open the delete request modal
+    function openDeleteRequestModal(requestId, requestStartDate, requestEndDate=null) {
+        // Get the delete request modal and open it
+        var deleteRequestModal = document.getElementById('delete-request-modal');
+        deleteRequestModal.MDCDialog.show();
+        
+        // Get the delete request message and replace it
+        var deleteRequestMessage = document.getElementById('delete-request-message');
+        deleteRequestMessage.innerHTML = 'Are you sure you want to delete your request from ' + requestStartDate + ' - ' + requestEndDate + '?';
     };
 </script>
 {% endblock %}
