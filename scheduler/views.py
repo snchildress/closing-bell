@@ -50,7 +50,7 @@ def request_vacation(request):
             else:
                 messages.success(request, 'Your vacation request for ' + \
                     start_date_month + '/' + start_date_day + '/' + \
-                    start_date_year + ' to ' + end_date_month + '/' + \
+                    start_date_year + ' - ' + end_date_month + '/' + \
                     end_date_day + '/' + end_date_year + ' was \
                     successfully submitted!')
         
