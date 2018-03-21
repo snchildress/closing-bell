@@ -44,7 +44,7 @@ def request_vacation(request):
             if start_date == end_date:
                 messages.success(request, 'Your vacation request for ' + \
                     start_date_month + '/' + start_date_day + '/' + \
-                start_date_year + ' was successfully submitted!')
+                start_date_year + ' was successfully scheduled!')
 
             # Otherwise message success for both dates provided
             else:
@@ -52,7 +52,7 @@ def request_vacation(request):
                     start_date_month + '/' + start_date_day + '/' + \
                     start_date_year + ' - ' + end_date_month + '/' + \
                     end_date_day + '/' + end_date_year + ' was \
-                    successfully submitted!')
+                    successfully scheduled!')
         
         # Otherwise message that an error occurred
         except Exception as e:
