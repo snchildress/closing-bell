@@ -87,16 +87,22 @@ def delete_request(request, request_id):
     requesting user
     """
     try:
+        # Query the request from the given request ID
         request_to_delete = Request.objects.get(id=request_id)
-        if request_to_delete.user != request.user:
-            messages.error(request, 'This request belongs to somebody else.')
+
+        # Do not allow non-staff users to delete other users' requests
+        if not request.user.is_staff and request_to_delete.user != request.user:
+            messages.error(request, 'You cannot delete requests belonging to \
+                other users!')
+            return redirect('home')
     
+        # Otherwise delete the request and message accordingly
         request_to_delete.delete()
         messages.success(request, 'Successfully deleted that request!')
 
     except Exception as e:
         print(e)
-        messages.error(request, 'There was an issue trying to delete that request.')
+        messages.error(request, 'It looks like that request no longer exists!')
 
     return redirect('home')
 
