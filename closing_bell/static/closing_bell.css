@@ -55,19 +55,39 @@ body {
     margin-top: 75px;
 }
 
-/* Left column takes up 33% */
-.left {
-    position: absolute;
-    left: 5%;
-    right: 62%;
+/* Use screen width to determine how to correctly position columns evenly */
+@media screen and (max-width: 1450px) {
+    /* Left column takes up 33% */
+    .left {
+        position: absolute;
+        left: 5%;
+        right: 62%;
+    }
+
+    /* Right column takes up 67% */
+    .right {
+        position: absolute;
+        left: 43%;
+        right: 5%;
+        text-align: center;
+    }
 }
 
-/* Right column takes up 67% */
-.right {
-    position: absolute;
-    left: 43%;
-    right: 5%;
-    text-align: center;
+@media screen and (min-width: 1450px) {
+    /* Left column takes up 33% */
+    .left {
+        position: absolute;
+        left: 10%;
+        right: 57%;
+    }
+
+    /* Right column takes up 67% */
+    .right {
+        position: absolute;
+        left: 52%;
+        right: 7%;
+        text-align: center;
+    }
 }
 
 /* Date picker dropdown arrow color */
