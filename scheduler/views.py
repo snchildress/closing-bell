@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from settings.models import Profile
@@ -79,6 +79,26 @@ def request_vacation(request):
     }
 
     return render(request, 'scheduler/home.html', context)
+
+@login_required
+def delete_request(request, request_id):
+    """
+    Deletes the given request if the request belongs to the
+    requesting user
+    """
+    try:
+        request_to_delete = Request.objects.get(id=request_id)
+        if request_to_delete.user != request.user:
+            messages.error(request, 'This request belongs to somebody else.')
+    
+        request_to_delete.delete()
+        messages.success(request, 'Successfully deleted that request!')
+
+    except Exception as e:
+        print(e)
+        messages.error(request, 'There was an issue trying to delete that request.')
+
+    return redirect('home')
 
 
 # Internal helper functions
