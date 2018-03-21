@@ -28,8 +28,13 @@
                             </div>
                             {% for future_request in future_requests %}
                                 <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
-                                    <strong>{{ future_request.number_of_days|floatformat }} days</strong>
-                                    {{ future_request.start_date|date }} - {{ future_request.end_date|date }}
+                                    {% if future_request.number_of_days > 1 %}
+                                        <strong>{{ future_request.number_of_days|floatformat }} days</strong>
+                                        {{ future_request.start_date|date }} - {{ future_request.end_date|date }}
+                                    {% else %}
+                                        <strong>{{ future_request.number_of_days|floatformat }} day</strong>
+                                        {{ future_request.start_date|date }}
+                                    {% endif %}
                                 </div>
                                 {% if not forloop.last %}
                                     <br />
@@ -54,8 +59,13 @@
                             </div>
                             {% for past_request in past_requests %}
                                 <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
-                                    <strong>{{ past_request.number_of_days|floatformat }} days</strong>
-                                    {{ past_request.start_date|date }} - {{ past_request.end_date|date }}
+                                    {% if past_request.number_of_days > 1 %}
+                                        <strong>{{ past_request.number_of_days|floatformat }} days</strong>
+                                        {{ past_request.start_date|date }} - {{ past_request.end_date|date }}
+                                    {% else %}
+                                        <strong>{{ past_request.number_of_days|floatformat }} day</strong>
+                                        {{ past_request.start_date|date }}
+                                    {% endif %}
                                 </div>
                                 {% if not forloop.last %}
                                     <br />
