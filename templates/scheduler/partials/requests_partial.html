@@ -1,0 +1,47 @@
+<!-- Section listing a user's requests -->
+<div>
+    <!-- Section title -->
+    <div style="padding-bottom: 15px;">
+        {% if requests|length > 1 and type == 'future' %}
+            FUTURE REQUESTS
+        {% elif type == 'future' %}
+            FUTURE REQUEST
+        {% elif requests|length > 1 %}
+            PAST REQUESTS
+        {% else %}
+            PAST REQUEST
+        {% endif %}
+    </div>
+
+    <!-- List of requests section -->
+    {% for request in requests %}
+        <div class="mdc-card mdc-elevation--z1" style="padding: 10px; position: relative;">
+            <div style="float: left;">
+                {% if request.number_of_days > 1 %}
+                    <strong>{{ request.number_of_days|floatformat }} days</strong>
+                    <br />
+                    {{ request.start_date|date }} - {{ request.end_date|date }}
+                {% else %}
+                    <strong>{{ request.number_of_days|floatformat }} day</strong>
+                    <br />
+                    {{ request.start_date|date }}
+                {% endif %}
+            </div>
+            {% if type == 'future' %}
+                {% if request.number_of_days > 1 %}
+                    <div id="delete-icon-div" onclick="openDeleteRequestModal({{ request.id }},
+                                                       '{{ request.start_date|date }}',
+                                                       '{{ request.end_date|date }}')">
+                {% else %}
+                    <div id="delete-icon-div" onclick="openDeleteRequestModal({{ request.id }},
+                                                       '{{ request.start_date|date }}')"> 
+                {% endif %}
+                        <i id="delete-icon" class="material-icons">delete</i>
+                </div>
+            {% endif %}
+        </div>
+        {% if not forloop.last %}
+            <br />
+        {% endif %}
+    {% endfor %}
+</div>
