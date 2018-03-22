@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALLOWED_HOSTS = [
     'localhost',
     '.localtunnel.me',
+    'us-east-1.elasticbeanstalk.com',
 ]
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'development-secret-key')
