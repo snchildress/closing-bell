@@ -17,73 +17,23 @@
                         margin: auto;
                         padding-top: 25px;">
                 {% if future_requests or past_requests %}
+                    <!-- Display the future requests section -->
                     {% if future_requests %}
-                        <div>
-                            <div style="padding-bottom: 15px;">
-                                {% if future_requests|length > 1 %}
-                                    FUTURE REQUESTS
-                                {% else %}
-                                    FUTURE REQUEST
-                                {% endif %}
-                            </div>
-                            {% for future_request in future_requests %}
-                                <div class="mdc-card mdc-elevation--z1" style="padding: 10px; position: relative;">
-                                    <div style="float: left;">
-                                        {% if future_request.number_of_days > 1 %}
-                                            <strong>{{ future_request.number_of_days|floatformat }} days</strong>
-                                            <br />
-                                            {{ future_request.start_date|date }} - {{ future_request.end_date|date }}
-                                        {% else %}
-                                            <strong>{{ future_request.number_of_days|floatformat }} day</strong>
-                                            <br />
-                                            {{ future_request.start_date|date }}
-                                        {% endif %}
-                                    </div>
-                                    {% if future_request.number_of_days > 1 %}
-                                        <div id="delete-icon-div" onclick="openDeleteRequestModal({{ future_request.id }}, '{{ future_request.start_date|date }}', '{{ future_request.end_date|date }}')">
-                                    {% else %}
-                                        <div id="delete-icon-div" onclick="openDeleteRequestModal({{ future_request.id }}, '{{ future_request.start_date|date }}')"> 
-                                    {% endif %}
-                                            <i id="delete-icon" class="material-icons">delete</i>
-                                    </div>
-                                </div>
-                                {% if not forloop.last %}
-                                    <br />
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+                        {% include './partials/requests_partial.html' with requests=future_requests type="future" %}
                     {% endif %}
                 
+                    <!-- If there are both future and past requests, display a section divider -->
                     {% if future_requests and past_requests %}
                         <hr style="margin-top: 25px;
                                    margin-bottom: 25px;">
                     {% endif %}
 
+                    <!-- Display the past requests section -->
                     {% if past_requests %}
-                        <div>
-                            <div style="padding-bottom: 15px;">
-                                {% if past_requests|length > 1 %}
-                                    PAST REQUESTS
-                                {% else %}
-                                    PAST REQUEST
-                                {% endif %}
-                            </div>
-                            {% for past_request in past_requests %}
-                                <div class="mdc-card mdc-elevation--z1" style="padding: 10px;">
-                                    {% if past_request.number_of_days > 1 %}
-                                        <strong>{{ past_request.number_of_days|floatformat }} days</strong>
-                                        {{ past_request.start_date|date }} - {{ past_request.end_date|date }}
-                                    {% else %}
-                                        <strong>{{ past_request.number_of_days|floatformat }} day</strong>
-                                        {{ past_request.start_date|date }}
-                                    {% endif %}
-                                </div>
-                                {% if not forloop.last %}
-                                    <br />
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+                        {% include './partials/requests_partial.html' with requests=past_requests type="past" %}
                     {% endif %}
+                
+                <!-- Otherwise message that the user does not have any requests yet -->
                 {% else %}
                     It looks like you don't have any requests yet!
                 {% endif %}
