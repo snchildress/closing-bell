@@ -73,9 +73,14 @@ def request_vacation(request):
     # Sort future requests in ascending order
     future_requests = requests.filter(start_date__gt=current_date)\
         .order_by('start_date')
+
+    # Get the user's profile
+    profile = Profile.objects.get(user__id=request.user.id)
+
     context = {
         'past_requests': past_requests,
         'future_requests': future_requests,
+        'profile': profile
     }
 
     return render(request, 'scheduler/home.html', context)
