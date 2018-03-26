@@ -11,7 +11,8 @@ Clone this repository and branch off `development` using the following branch na
 * `bug/name`
 
 ```bash
-https://github.com/snchildress/closing-bell
+git clone https://github.com/snchildress/closing-bell
+git checkout -b feature/name
 ```
 
 Create and activate a virtual environment and turn on DEBUG mode for local development
