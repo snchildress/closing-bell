@@ -77,11 +77,11 @@ def request_vacation(request):
         .order_by('start_date')
     # Get the number of days requested YTD
     requested_days_ytd = requests.filter(start_date__gt=current_year)\
-        .aggregate(total=Sum('number_of_days'))['total']
+        .aggregate(sum=Sum('number_of_days'))['sum']
 
     # Sum the number of days requested before and after today
-    past_requests_ytd = past_requests.aggregate(total=Sum('number_of_days'))['total']
-    future_requests_ytd = future_requests.aggregate(total=Sum('number_of_days'))['total']
+    past_requests_ytd = past_requests.aggregate(sum=Sum('number_of_days'))['sum']
+    future_requests_ytd = future_requests.aggregate(sum=Sum('number_of_days'))['sum']
 
     # Get the user's profile
     profile = Profile.objects.get(user__id=request.user.id)
