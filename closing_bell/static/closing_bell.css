@@ -52,7 +52,7 @@ body {
 /* Column layout CSS for scheduler */
 .column {
     margin: auto;
-    margin-top: 75px;
+    margin-top: 35px;
 }
 
 /* Use screen width to determine how to correctly position columns evenly */

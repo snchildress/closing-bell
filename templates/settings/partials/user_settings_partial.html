@@ -125,6 +125,18 @@
                 <i class="material-icons mdc-button__icon">check</i>
                     Update
             </button>
+            
+            <!-- User requests button -->
+            <a href="{% url 'user_requests' user.profile.uuid %}">
+                <button class="mdc-button" type="button"
+                        style="float: right;
+                                margin-right: 20px;"
+                        id="user-settings-button"
+                        data-mdc-auto-init="MDCRipple">
+                        <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                    Requests
+                </button>
+            </a>
 
             <!-- User settings button -->
             <a href="{% url 'user_settings' user.profile.uuid %}">
