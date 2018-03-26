@@ -128,16 +128,27 @@
                                                        margin-top: 50px;
                                                        margin-bottom: 50px;
                                                        max-width: 750px;">
-        <h2 class="mdc-typography--display3" style="height: 25px;">
+        <h2 class="mdc-typography--display3">
             Remaining Balance
         </h2>
 
             <!-- Remaining balance div -->
             <div style="width: 80%; margin: auto;">
                 <div style="text-align: left;">
-                    {{ profile.remaining_accrual_days }}
+                    <div style="padding-bottom: 15px;">
+                        REMAINING UNUSED BALANCE
+                    </div>
+                    <strong>
+                        {{ profile.remaining_accrual_days }}
+                        {% if profile.remaining_accrual_days != 1 %}
+                            days
+                        {% else %}
+                            day
+                        {% endif %}
+                    </strong>
                 </div>
             </div>
+        </div>
     </div>
 
     <!-- Delete request dialog modal -->
