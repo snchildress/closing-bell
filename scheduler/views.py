@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.db.models import Sum
 
 from settings.models import Profile
@@ -11,13 +12,21 @@ from datetime import date, datetime
 
 # External view
 @login_required
-def request_vacation(request):
+def request_vacation(request, uuid=None):
     """
     Renders a page to request vacation time and displays
     previous and future requests
     """
     # Accrue monthly days for each user who hasn't yet accrued this month
     accrue_days()
+
+    # Allow staff users to view other users' requests
+    if uuid and request.user.is_staff:
+        user = User.objects.filter(profile__uuid=uuid) \
+            .select_related('profile')[0]
+    # Otherwise only display the requesting user's requests
+    else:
+        user = request.user
 
     if request.method == 'POST':
         try:
@@ -28,7 +37,7 @@ def request_vacation(request):
 
             # Create a Request record with the given dates
             request_record = Request.objects.create(
-                user=request.user,
+                user=user,
                 start_date=start_date,
                 end_date=end_date
             )
@@ -68,7 +77,7 @@ def request_vacation(request):
     current_year = today.strftime('%Y-01-01T00:00:00.000Z')
 
     # Get all of the user's requests
-    requests = Request.objects.filter(user=request.user)
+    requests = Request.objects.filter(user=user)
     # Sort past requests in descending order
     past_requests = requests.filter(end_date__lte=current_date)\
         .order_by('-end_date')
@@ -83,14 +92,11 @@ def request_vacation(request):
     past_requests_ytd = past_requests.aggregate(sum=Sum('number_of_days'))['sum']
     future_requests_ytd = future_requests.aggregate(sum=Sum('number_of_days'))['sum']
 
-    # Get the user's profile
-    profile = Profile.objects.get(user__id=request.user.id)
-
     # Calculate number of days accrued YTD using the annual accrual day policy
-    days_accrued_ytd = today.month / 12 * float(profile.annual_accrual_days)
+    days_accrued_ytd = today.month / 12 * float(user.profile.annual_accrual_days)
 
     # Get the lifetime number of days accrued to compare to days accrued YTD
-    lifetime_days_accrued = profile.remaining_accrual_days
+    lifetime_days_accrued = user.profile.remaining_accrual_days
     if requested_days_ytd:
         lifetime_days_accrued += requested_days_ytd
     
@@ -103,7 +109,7 @@ def request_vacation(request):
         'future_requests': future_requests,
         'past_requests_ytd': past_requests_ytd,
         'future_requests_ytd': future_requests_ytd,
-        'profile': profile,
+        'profile': user.profile,
         'days_accrued_ytd': days_accrued_ytd,
     }
 
