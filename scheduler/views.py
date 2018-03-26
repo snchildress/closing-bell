@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import Sum
 
 from settings.models import Profile
 from scheduler.models import Request
@@ -61,9 +62,10 @@ def request_vacation(request):
                 your request.')
 
 
-    # Get the current date in ISO format
+    # Get relevant dates in ISO format for queries
     today = date.today()
     current_date = today.strftime('%Y-%m-%dT00:00:00.000Z')
+    current_year = today.strftime('%Y-01-01T00:00:00.000Z')
 
     # Get all of the user's requests
     requests = Request.objects.filter(user=request.user)
@@ -73,14 +75,30 @@ def request_vacation(request):
     # Sort future requests in ascending order
     future_requests = requests.filter(start_date__gt=current_date)\
         .order_by('start_date')
+    # Get the number of days requested YTD
+    requested_days_ytd = requests.filter(start_date__gt=current_year)\
+        .aggregate(total=Sum('number_of_days'))['total']
 
     # Get the user's profile
     profile = Profile.objects.get(user__id=request.user.id)
 
+    # Calculate number of days accrued YTD using the annual accrual day policy
+    days_accrued_ytd = today.month / 12 * float(profile.annual_accrual_days)
+
+    # Get the lifetime number of days accrued to compare to days accrued YTD
+    lifetime_days_accrued = profile.remaining_accrual_days
+    if requested_days_ytd:
+        lifetime_days_accrued += requested_days_ytd
+    
+    # If user began accruing mid-current year
+    if lifetime_days_accrued < days_accrued_ytd:
+        days_accrued_ytd = lifetime_days_accrued
+
     context = {
         'past_requests': past_requests,
         'future_requests': future_requests,
-        'profile': profile
+        'profile': profile,
+        'days_accrued_ytd': days_accrued_ytd,
     }
 
     return render(request, 'scheduler/home.html', context)
