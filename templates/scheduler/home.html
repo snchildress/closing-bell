@@ -19,18 +19,18 @@
                 {% if future_requests or past_requests %}
                     <!-- Display the future requests section -->
                     {% if future_requests %}
-                        {% include './partials/requests_partial.html' with requests=future_requests type="future" %}
+                        {% include './partials/requests_partial.html' with requests=future_requests type="future" total=future_requests_ytd %}
                     {% endif %}
                 
                     <!-- If there are both future and past requests, display a section divider -->
                     {% if future_requests and past_requests %}
-                        <hr style="margin-top: 25px;
+                        <hr style="margin-top: 75px;
                                    margin-bottom: 25px;">
                     {% endif %}
 
                     <!-- Display the past requests section -->
                     {% if past_requests %}
-                        {% include './partials/requests_partial.html' with requests=past_requests type="past" %}
+                        {% include './partials/requests_partial.html' with requests=past_requests type="past" total=past_requests_ytd %}
                     {% endif %}
                 
                 <!-- Otherwise message that the user does not have any requests yet -->
@@ -121,6 +121,53 @@
                     </button>
                 </div>
             </form>
+        </div>
+
+        <!-- Remaining balance card -->
+        <div class="mdc-card mdc-elevation--z3" style="padding-bottom: 50px;
+                                                       margin-top: 50px;
+                                                       margin-bottom: 50px;
+                                                       max-width: 750px;">
+        <h2 class="mdc-typography--display3">
+            Remaining Balance
+        </h2>
+
+            <!-- Remaining balance div -->
+            <div style="width: 80%; margin: auto;">
+                <div class="mdc-card mdc-elevation--z1" style="text-align: left;
+                                                               float: left;
+                                                               width: 47.5%;
+                                                               padding: 10px;">
+                    <div style="padding-bottom: 15px;">
+                        DAYS ACCRUED (YTD)
+                    </div>
+                    <strong>
+                        {{ days_accrued_ytd }}
+                        {% if days_accrued_ytd != 1 %}
+                            days
+                        {% else %}
+                            day
+                        {% endif %}
+                    </strong>
+                </div>
+
+                <div class="mdc-card mdc-elevation--z1" style="text-align: left;
+                                                               float: right;
+                                                               width: 47.5%;
+                                                               padding: 10px;">
+                    <div style="padding-bottom: 15px;">
+                        DAYS AVAILABLE (YTD)
+                    </div>
+                    <strong>
+                        {{ profile.remaining_accrual_days }}
+                        {% if profile.remaining_accrual_days != 1 %}
+                            days
+                        {% else %}
+                            day
+                        {% endif %}
+                    </strong>
+                </div>
+            </div>
         </div>
     </div>
 

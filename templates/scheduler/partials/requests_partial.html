@@ -44,4 +44,25 @@
             <br />
         {% endif %}
     {% endfor %}
+
+    <!-- Total number of days for requests section -->
+    <div style="float: right;
+                margin-top: 25px;">
+            <!-- The total amount -->
+            {{ total|floatformat }}
+
+            <!-- The word day or days -->
+            {% if total > 1 %}
+                days
+            {% else %}
+                day
+            {% endif %}
+
+            <!-- The description given the section type -->
+            {% if type == 'future' %}
+                scheduled
+            {% else %}
+                used
+            {% endif %}
+    </div>
 </div>
