@@ -87,12 +87,15 @@
 
             // Construct array of elements to expand or minimize
             var expandableElements = [
-                card.querySelector('#card-title-minimized'),
+                // Minimized on page load (when card is expanded)
                 card.querySelector('#card-title-expanded'),
                 card.querySelector('#profile-div'),
                 card.querySelector('#vacation-policy-div'),
                 card.querySelector('#vacation-policy-fields-div'),
                 card.querySelector('#update-button-div'),
+                // Displayed on page load (when card is minimized)
+                card.querySelector('#card-title-minimized'),
+                card.querySelector('#remaining-accrual-div'),
             ]
 
             // Toggle the visiblity of all expandable elements

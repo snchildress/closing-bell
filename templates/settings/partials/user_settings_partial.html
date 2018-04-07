@@ -113,6 +113,22 @@
             </div>
         </div>
 
+        <!-- Remaining accrual days div -->
+        <div id="remaining-accrual-div"
+             style="width: 80%;
+                    margin: auto;">
+            <!-- Remaining accrual days readonly field -->
+            <div class="mdc-text-field" style="width: 100%;" data-mdc-auto-init="MDCTextField">
+                <input class="mdc-text-field__input" id="remaining-accrual-days"
+                       name="remaining-accrual-days" type="number" step="0.01"
+                       value="{{ user.profile.remaining_accrual_days }}" readonly />
+                <label class="mdc-text-field__label" for="remaining-accrual-days">
+                    Available Accrual Days
+                </label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+        </div>
+
         <!-- Profile UUID -->
         <input id="profile-uuid" name="profile-uuid" type="hidden" value="{{ user.profile.uuid }}" />
 
