@@ -43,7 +43,7 @@ The following tasks are intended to clarify the user experience or add additiona
 - [ ] Allow users to specify a single date when taking a single day off
 - [ ] Remove confusing reset buttons
 - [ ] Validate that a request's start date is before an end date
-- [ ] Swap the placement of one's balance and accrued days
+- [x] Swap the placement of one's balance and accrued days
 - [ ] Provide admins the remaining balance of all users
 - [ ] Remove nights and weekends from balance deductions and additions
 

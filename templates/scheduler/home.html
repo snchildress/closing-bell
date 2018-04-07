@@ -140,15 +140,15 @@
             <!-- Remaining balance div -->
             <div style="width: 80%; margin: auto;">
                 <div class="mdc-card mdc-elevation--z1" style="text-align: left;
-                                                               float: left;
-                                                               width: 47.5%;
-                                                               padding: 10px;">
+                                                                float: left;
+                                                                width: 47.5%;
+                                                                padding: 10px;">
                     <div style="padding-bottom: 15px;">
-                        DAYS ACCRUED (YTD)
+                        DAYS AVAILABLE (YTD)
                     </div>
                     <strong>
-                        {{ days_accrued_ytd }}
-                        {% if days_accrued_ytd != 1 %}
+                        {{ profile.remaining_accrual_days }}
+                        {% if profile.remaining_accrual_days != 1 %}
                             days
                         {% else %}
                             day
@@ -161,11 +161,11 @@
                                                                width: 47.5%;
                                                                padding: 10px;">
                     <div style="padding-bottom: 15px;">
-                        DAYS AVAILABLE (YTD)
+                        DAYS ACCRUED (YTD)
                     </div>
                     <strong>
-                        {{ profile.remaining_accrual_days }}
-                        {% if profile.remaining_accrual_days != 1 %}
+                        {{ days_accrued_ytd }}
+                        {% if days_accrued_ytd != 1 %}
                             days
                         {% else %}
                             day
