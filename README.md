@@ -39,7 +39,7 @@ The following tasks are intended to clarify the user experience or add additiona
 
 ### Clarify User Experience
 
-- [ ] Make it clear to admins which user's request page you are viewing
+- [x] Make it clear to admins which user's request page you are viewing
 - [ ] Allow users to specify a single date when taking a single day off
 - [x] Remove confusing reset buttons
 - [ ] Validate that a request's start date is before its end date
