@@ -114,16 +114,6 @@
                         <i class="material-icons mdc-button__icon">check</i>
                             Request
                     </button>
-
-                    <!-- Reset vacation values button -->
-                    <button class="mdc-button" type="button"
-                            style="float: right;
-                                width: 125px;
-                                margin-right: 20px;"
-                            id="reset-button" data-mdc-auto-init="MDCRipple">
-                        <i class="material-icons mdc-button__icon">restore</i>
-                            Reset
-                    </button>
                 </div>
             </form>
         </div>
@@ -219,18 +209,12 @@
     // Get form elements
     var form = document.getElementById('form');
     var requestButton = document.getElementById('request-button');
-    var resetButton = document.getElementById('reset-button');
     var startDate = document.getElementById('start-date');
     var endDate = document.getElementById('end-date');
 
     // Submit the form when a user clicks the request button
     requestButton.addEventListener('click', function() {
         submitForm();
-    });
-
-    // Refresh the page when a user clicks the reset button
-    resetButton.addEventListener('click', function() {
-        location.reload();
     });
 
     function submitForm() {
