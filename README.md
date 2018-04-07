@@ -45,6 +45,7 @@ The following tasks are intended to clarify the user experience or add additiona
 - [ ] Validate that a request's start date is before an end date
 - [ ] Swap the placement of one's balance and accrued days
 - [ ] Provide admins the remaining balance of all users
+- [ ] Remove nights and weekends from balance deductions and additions
 
 ### Additional Functionality
 
