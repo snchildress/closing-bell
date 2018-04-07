@@ -105,12 +105,6 @@
             } else {
                 toggleIcon.innerHTML = 'expand_more';
             }
-
-            // Toggle read only attribute of editable fields
-            var annualAccrualDays = card.querySelector('#annual-accrual-days');
-            var maxAllowableAccrualDays = card.querySelector('#max-allowable-accrual-days');
-            annualAccrualDays.readOnly = !annualAccrualDays.readOnly;
-            maxAllowableAccrualDays.readOnly = !maxAllowableAccrualDays.readOnly;
         };
 
         function toggleElementDisplay(element) {
