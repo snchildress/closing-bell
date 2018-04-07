@@ -153,16 +153,6 @@
                     Update
                 {% endif %}
             </button>
-
-            <!-- Reset settings values button -->
-            <button class="mdc-button" type="button"
-                    style="float: right;
-                           width: 110px;
-                           margin-right: 20px;"
-                    id="reset-button" data-mdc-auto-init="MDCRipple">
-                <i class="material-icons mdc-button__icon">restore</i>
-                    Reset
-            </button>
         </div>
     </form>
 
@@ -192,16 +182,6 @@
     submitButton.addEventListener('click', function() {
         validateSubmission(form);
     });
-
-
-    // Get reset button
-    var resetButton = document.getElementById('reset-button');
-
-    // Refresh page on reset button click
-    resetButton.addEventListener('click', function() {
-        location.reload();
-    });
-
 
     // Validate that all required form fields have values, then submit
     function validateSubmission(form) {
