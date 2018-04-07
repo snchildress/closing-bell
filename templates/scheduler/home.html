@@ -2,6 +2,17 @@
 
 {% block body %}
 <div>
+    <!-- Only display Viewing as when not on own page as staff user -->
+    {% if user.is_staff and profile.user.last_name != user.last_name %}
+        <div style="text-align: center; color: #158CAF">
+        <br />
+        <br />
+            <strong>
+                Viewing as {{ profile.user.first_name }} {{ profile.user.last_name }}
+            </strong>
+        </div>
+    {% endif %}
+
     <!-- Left column is 33% width -->
     <div class="column left">
 
