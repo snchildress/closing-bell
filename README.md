@@ -32,3 +32,21 @@ python manage.py runserver
 ```
 
 Once your feature, task, or bug fix is complete, submit a Pull Request to the `development` branch
+
+## To Do
+
+The following tasks are intended to clarify the user experience or add additional functionality
+
+### Clarify User Experience
+
+- [ ] Make it clear to admins which user's request page you are viewing
+- [ ] Allow users to specify a single date when taking a single day off
+- [ ] Remove confusing reset buttons
+- [ ] Validate that a request's start date is before an end date
+- [ ] Swap the placement of one's balance and accrued days
+- [ ] Provide admins the remaining balance of all users
+
+### Additional Functionality
+
+- [ ] Notify admins when users submit new requests
+- [ ] Expose all users' requests by month and year in a single report view
